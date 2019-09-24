@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -e
+
+function maven-artifact-url-builder {
+    echo "https://mvnrepository.com/artifact/$(echo "${1}" | tr ":" "/")"
+}
+
+function __read_from_user_selection {
+    xclip -out
+}
+
+function __open_url {
+    xdg-open "$1"
+}
+
+text="$(__read_from_user_selection)"
+if [ -n "${text}" ]; then
+    url="$("${1}-url-builder" "${text}")"
+    __open_url "$url"
+fi
