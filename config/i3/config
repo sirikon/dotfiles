@@ -183,6 +183,8 @@ bar {
 
 # Custom
 bindsym $mod+Shift+s sticky toggle
+for_window [title="Volume Control"] floating enable
+for_window [title="Network Connections"] floating enable
 
 ## Screenshots
 bindsym Print exec --no-startup-id mkdir -p "/home/$USER/Pictures/Screenshots" && maim "/home/$USER/Pictures/Screenshots/full-$(date +"%Y-%m-%d_%H-%M-%S").png"
@@ -195,7 +197,3 @@ bindsym Ctrl+Shift+Print exec --no-startup-id maim --select | xclip -selection c
 ## On start
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id dropbox start
-
-
-
-
