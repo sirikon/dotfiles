@@ -1,8 +1,16 @@
 #!/usr/bin/env bash
 
 # Kudos to: https://unix.stackexchange.com/a/251920
+#           https://www.reddit.com/r/i3wm/comments/7lr4zj/interactive_i3blocks/droclo7?utm_source=share&utm_medium=web2x
 
 function main {
+    case $BLOCK_BUTTON in
+        1) pavucontrol &>/dev/null & ;;
+        2) pactl set-sink-mute @DEFAULT_SINK@ toggle &>/dev/null ;;
+        4) pactl set-sink-volume @DEFAULT_SINK@ +10% &>/dev/null ;;
+        5) pactl set-sink-volume @DEFAULT_SINK@ -10% &>/dev/null ;;
+    esac
+
     printf "%s" "🎵 "
     muted=$(get-default-sink-muted)
     if [ "$muted" = "yes" ]; then
