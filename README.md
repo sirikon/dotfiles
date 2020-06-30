@@ -1,8 +1,7 @@
 # dotfiles
 
-Add this to your bashrc:
+Run the installer:
 
 ```bash
-# Sirikon
-source ~/.sirikon/activate.sh
+./install.sh
 ```
