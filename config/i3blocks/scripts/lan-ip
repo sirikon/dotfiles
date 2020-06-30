@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+function main {
+    printf "%s" "🖥️ "
+    get-current-network-card-ip
+}
+
+function get-current-network-card-ip {
+    ip addr show "$(get-current-network-card)" | grep "inet " | tr "/" " " | awk '{ print $2 }'
+}
+
+function get-current-network-card {
+    ip route | grep default | awk '{ print $5 }'
+}
+
+main

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+function main {
+    date '+%Y-%m-%d %H:%M:%S'
+}
+
+main

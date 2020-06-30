@@ -22,6 +22,12 @@ function main {
     else
         ln -s "${ROOT}/config/i3status" ~/.config/i3status
     fi
+    
+    if [ -d ~/.config/i3blocks ]; then
+        printf "%s\n" "i3blocks config directory already exists"
+    else
+        ln -s "${ROOT}/config/i3blocks" ~/.config/i3blocks
+    fi
 }
 
 function bashrc-fragment {
