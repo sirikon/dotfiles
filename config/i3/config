@@ -187,8 +187,8 @@ for_window [title="Volume Control"] floating enable
 for_window [title="Network Connections"] floating enable
 
 ## Screenshots
-bindsym Print exec --no-startup-id mkdir -p "/home/$USER/Pictures/Screenshots" && maim "/home/$USER/Pictures/Screenshots/full-$(date +"%Y-%m-%d_%H-%M-%S").png"
-bindsym Shift+Print exec --no-startup-id mkdir -p "/home/$USER/Pictures/Screenshots" && maim --select "/home/$USER/Pictures/Screenshots/area-$(date +"%Y-%m-%d_%H-%M-%S").png"
+bindsym Print exec --no-startup-id mkdir -p "$HOME/Pictures/Screenshots" && maim "$HOME/Pictures/Screenshots/full-$(date +"%Y-%m-%d_%H-%M-%S").png"
+bindsym Shift+Print exec --no-startup-id mkdir -p "$HOME/Pictures/Screenshots" && maim --select "$HOME/Pictures/Screenshots/area-$(date +"%Y-%m-%d_%H-%M-%S").png"
 
 ## Clipboard Screenshots
 bindsym Ctrl+Print exec --no-startup-id maim | xclip -selection clipboard -t image/png
