@@ -17,5 +17,8 @@ interval=once
 signal=1
 markup=pango
 
+[battery]
+interval=60
+
 [time]
 interval=1

@@ -11,7 +11,7 @@ function main {
         5) pactl set-sink-volume @DEFAULT_SINK@ -10% &>/dev/null ;;
     esac
 
-    printf "%s" "🎵 "
+    printf "%s" "🎵"
     muted=$(get-default-sink-muted)
     if [ "$muted" = "yes" ]; then
         printf "%s\n" "<span color=\"#ff4f4f\" weight=\"bold\">muted</span>"

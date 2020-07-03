@@ -28,6 +28,10 @@ function main {
     else
         ln -s "${ROOT}/config/i3blocks" ~/.config/i3blocks
     fi
+
+    sudo pacman -Syu vim dmenu gnome-terminal i3blocks firefox pamac pavucontrol terminus-font noto-fonts-emoji ttf-dejavu polkit-gnome nitrogen openssh code xorg-xbacklight keepassxc zenity
+    rm -rf ~/.dropbox-dist
+    install -dm0 ~/.dropbox-dist
 }
 
 function bashrc-fragment {
