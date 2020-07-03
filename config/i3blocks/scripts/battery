@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
 
 function main {
+    if [ ! -d "/sys/class/power_supply/BAT0" ]; then
+        exit 0
+    fi
+
     case $BLOCK_BUTTON in
         1) zenity --info --width=600 --text="$(acpi -b)\n$(acpi -a)" &>/dev/null & ;;
     esac
 
+    capacity=$(cat /sys/class/power_supply/BAT0/capacity)
     printf "%s" "⚡"
-    acpi -b | IFS="," awk 'BEGIN { FS = "," } ; { print $2 }' | tr -d '[:space:]'
-    printf "%s\n" ""
+    printf "%s\n" "${capacity}%"
 }
 
 main
