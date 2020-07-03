@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 function main {
-    if [ ! -d "/sys/class/power_supply/BAT0" ]; then
+    batteryFolder=$(get-battery-folder)
+    if [ ! -d "${batteryFolder}" ]; then
         exit 0
     fi
 
@@ -9,9 +10,13 @@ function main {
         1) zenity --info --width=600 --text="$(acpi -b)\n$(acpi -a)" &>/dev/null & ;;
     esac
 
-    capacity=$(cat /sys/class/power_supply/BAT0/capacity)
+    capacity=$(cat "${batteryFolder}/capacity")
     printf "%s" "⚡"
     printf "%s\n" "${capacity}%"
+}
+
+function get-battery-folder {
+    printf "%s" "/sys/class/power_supply/BAT0"
 }
 
 main
