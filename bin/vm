@@ -10,9 +10,10 @@ function install-deps {
 }
 
 function download-base {(
-    mkdir -p "${imagesPath}/base"
+    sudo rm -rf "${imagesPath}/base"
+    sudo mkdir -p "${imagesPath}/base"
     cd "${imagesPath}/base"
-    wget -O focal.img https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64-disk-kvm.img
+    sudo wget -O focal.img https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64-disk-kvm.img
 )}
 
 function base-info {(
@@ -65,6 +66,11 @@ function run-instance {
         --disk path="${imagesPath}/instance/focal.qcow2",format=qcow2 \
         --disk "${imagesPath}/instance/instance.iso",device=cdrom \
         --import --network network=default --noautoconsole
+}
+
+function destroy-instance {
+    sudo virsh shutdown instance
+    sudo virsh undefine instance
 }
 
 "$1"
