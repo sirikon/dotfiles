@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+backlightDevice="/sys/class/backlight/amdgpu_bl0"
+
+function main {
+    exit-if-no-backlight-device
+
+    set-brightness 100
+}
+
+function get-brightness {
+    cat "${backlightDevice}/brightness"
+}
+
+function set-brightness {
+    printf "%s\n" "$1" > "${backlightDevice}/brightness"
+}
+
+function exit-if-no-backlight-device {
+    if [ ! -d "$backlightDevice" ]; then
+        exit 0
+    fi
+}
+
+main "$@"
