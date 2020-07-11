@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+function main {
+    target="$1"
+    package="$2"
+
+    printf "%s\n" "Publishing:"
+    printf "%s\n" " package: ${package}"
+    printf "%s\n" " to target: ${target}"
+    printf "%s\n" ""
+    
+    scp "${package}" "${target}:/var/srkbz/apt/public/packages/"
+    ssh "${target}" "srkbz-apt-refresh"
+}
+
+main "$@"
