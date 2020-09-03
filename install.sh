@@ -17,6 +17,9 @@ function main {
         polkit-gnome nitrogen openssh code xorg-xbacklight \
         keepassxc zenity
 
+    sudo apt update && sudo apt install \
+        fonts-noto-color-emoji i3blocks gnome-terminal
+
     prevent-dropbox-self-update
 }
 
@@ -32,7 +35,7 @@ function link-folder-if-not-exists {
     source="$1"
     target="$2"
 
-    if [ ! -d "$source" ]; then
+    if [ ! -d "$target" ]; then
         ln -s "$source" "$target"
     else
         printf "%s\n" "Link: skipping ${source}"
