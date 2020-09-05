@@ -18,7 +18,7 @@ function main {
         keepassxc zenity
 
     sudo apt update && sudo apt install \
-        fonts-noto-color-emoji i3blocks gnome-terminal
+        fonts-noto-color-emoji i3blocks gnome-terminal maim xclip
 
     prevent-dropbox-self-update
 }
