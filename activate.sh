@@ -43,4 +43,8 @@ function used-ports {
 	sudo lsof -i -P -n | grep LISTEN
 }
 
+function backup-bilbaoswcraft-newsletter-db {
+	scp root@bilbaoswcraft.srk.bz:/var/lib/buletina/data.db ~/Dropbox/Backup/BilbaoSWCraft_Newsletter/data.db
+}
+
 prompt-normal
