@@ -45,6 +45,8 @@ function used-ports {
 
 function backup-bilbaoswcraft-newsletter-db {
 	scp root@bilbaoswcraft.srk.bz:/var/lib/buletina/data.db ~/Dropbox/Backup/BilbaoSWCraft_Newsletter/data.db
+	subscription_count=$(sqlite3 ~/Dropbox/Backup/BilbaoSWCraft_Newsletter/data.db "SELECT COUNT(1) FROM subscriptions;")
+	printf "%s\n" "Subscription count: ${subscription_count}"
 }
 
 prompt-normal
