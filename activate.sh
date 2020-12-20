@@ -44,9 +44,18 @@ function used-ports {
 }
 
 function backup-bilbaoswcraft-newsletter-db {
-	scp root@bilbaoswcraft.srk.bz:/var/lib/buletina/data.db ~/Dropbox/Backup/BilbaoSWCraft_Newsletter/data.db
+	scp root@116.203.231.200:/var/lib/buletina/data.db ~/Dropbox/Backup/BilbaoSWCraft_Newsletter/data.db
 	subscription_count=$(sqlite3 ~/Dropbox/Backup/BilbaoSWCraft_Newsletter/data.db "SELECT COUNT(1) FROM subscriptions;")
 	printf "%s\n" "Subscription count: ${subscription_count}"
+}
+
+function patch-vscodium-marketplace {
+	productJson="/usr/share/codium/resources/app/product.json"
+	cat "${productJson}" \
+		| jq '.extensionsGallery.serviceUrl = "https://marketplace.visualstudio.com/_apis/public/gallery"' \
+		| jq '.extensionsGallery.itemUrl = "https://marketplace.visualstudio.com/items"' \
+		| jq -M \
+		| sudo tee "${productJson}" > /dev/null
 }
 
 prompt-normal
