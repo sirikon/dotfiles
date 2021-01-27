@@ -58,4 +58,8 @@ function patch-vscodium-marketplace {
 		| sudo tee "${productJson}" > /dev/null
 }
 
+function upgrade-youtube-dl {
+	sudo -H pip3 install --upgrade youtube-dl
+}
+
 prompt-normal
