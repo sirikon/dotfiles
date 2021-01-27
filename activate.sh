@@ -60,6 +60,9 @@ function patch-vscodium-marketplace {
 
 function upgrade-youtube-dl {
 	sudo -H pip3 install --upgrade youtube-dl
+	printf "%s\n" \
+		"" \
+		"GRACIAS EKAITZ AMO Y SEÑOR, MASTER OF THE PUPPETS"
 }
 
 prompt-normal
