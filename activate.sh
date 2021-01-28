@@ -65,4 +65,8 @@ function upgrade-youtube-dl {
 		"GRACIAS EKAITZ AMO Y SEÑOR, MASTER OF THE PUPPETS"
 }
 
+function my-commits-here {
+	smerge search 'author:"Carlos Fdez. Llamas <hello@sirikon.me>"' .
+}
+
 prompt-normal
