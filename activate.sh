@@ -35,10 +35,6 @@ function docker-prune {
 	docker image prune -af
 }
 
-function install-n {
-	curl -L "https://git.io/n-install" | bash
-}
-
 function used-ports {
 	sudo lsof -i -P -n | grep LISTEN
 }
