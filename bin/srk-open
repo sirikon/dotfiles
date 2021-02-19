@@ -6,6 +6,10 @@ function maven-artifact-url-builder {
     echo "https://mvnrepository.com/artifact/$(echo "${1}" | tr ":" "/")"
 }
 
+function jira-task-url-builder {
+    echo "https://${JIRA_WORKSPACE}.atlassian.net/browse/${1}"
+}
+
 function __read_from_user_selection {
     xclip -out
 }
