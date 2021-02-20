@@ -59,4 +59,8 @@ function bashEval(command) {
     return std.fdopen(output_read, 'r').readAsString();
 }
 
-main(scriptArgs.splice(1))
+try { main(scriptArgs.splice(1)) }
+catch (err) {
+    std.err.puts(`ERROR: ${err.message}\n`);
+    std.exit(1);
+}
