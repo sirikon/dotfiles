@@ -27,28 +27,31 @@ const commands = {
     full_to_file() {
         ensureScreenshotsDirectory();
         const fileName = bashEval(`printf "%s" "full-$(date +"%Y-%m-%d_%H-%M-%S").png"`);
-        const exitCode = run(`maim "${SCREENSHOTS_DIR}/${fileName}"`);
-        if (exitCode === 0) notify(`Saved full screenshot to ${fileName}`);
+        run(`maim "${SCREENSHOTS_DIR}/${fileName}"`);
+        notify(`Saved full screenshot to ${fileName}`);
     },
     area_to_file() {
         ensureScreenshotsDirectory();
         const fileName = bashEval(`printf "%s" "area-$(date +"%Y-%m-%d_%H-%M-%S").png"`);
-        const exitCode = run(`maim --select "${SCREENSHOTS_DIR}/${fileName}"`);
-        if (exitCode === 0) notify(`Saved area screenshot to ${fileName}`);
+        run(`maim --select "${SCREENSHOTS_DIR}/${fileName}"`);
+        notify(`Saved area screenshot to ${fileName}`);
     },
     full_to_clipboard() {
-        const exitCode = run(`set -euo pipefail && maim | xclip -selection clipboard -t image/png`)
-        if (exitCode === 0) notify(`Full screenshot send to clipboard`);
+        run(`set -euo pipefail && maim | xclip -selection clipboard -t image/png`);
+        notify(`Full screenshot send to clipboard`);
     },
     area_to_clipboard() {
-        const exitCode = run(`set -euo pipefail && maim --select | xclip -selection clipboard -t image/png`);
-        if (exitCode === 0) notify(`Area screenshot send to clipboard`);
+        run(`set -euo pipefail && maim --select | xclip -selection clipboard -t image/png`);
+        notify(`Area screenshot send to clipboard`);
     }
 }
 
 const ensureScreenshotsDirectory = () => run(`mkdir -p "${SCREENSHOTS_DIR}"`);
 const notify = (msg) => os.exec(['notify-send', msg]);
-const run = (command) => os.exec(['bash', '-c', command]);
+const run = (command) => {
+    const exitCode = os.exec(['bash', '-c', command]);
+    if (exitCode > 0) throw new Error(`Command \`${command}\` returned with exit code ${exitCode}`);
+}
 function bashEval(command) {
     const [output_read, output_write] = os.pipe()
     os.exec(['bash', '-c', command], { stdout: output_write })
