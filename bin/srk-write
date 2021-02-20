@@ -17,7 +17,7 @@ function __pick-stripe-card {
         --title="Stripe Card Picker" \
         --width="500" \
         --height="300" \
-        --text="Pick a credit card3" \
+        --text="Pick a credit card" \
         --extra-button="More cards" \
         --column="Number" --column="Setup" --column="Pay" --column="SCA" \
         \
