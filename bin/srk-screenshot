@@ -1,0 +1,59 @@
+#!/usr/bin/env -S qjs --std
+
+const SCREENSHOTS_DIR = "$HOME/Pictures/Screenshots"
+
+function main(args) {
+    const [command] = args;
+    if (!commands[command]) commands.help();
+    else commands[command]();
+}
+
+const hotkeys = [
+    ['Print', 'Full to file'],
+    ['Shift+Print', 'Area to file'],
+    ['Ctrl+Print', 'Full to clipboard'],
+    ['Ctrl+Shift+Print', 'Area to clipboard'],
+]
+
+const commands = {
+    help() {
+        console.log('Available commands:')
+        Object.keys(commands).forEach(c => console.log(` ${c}`));
+    },
+    hotkeys() {
+        os.exec(['zenity', '--info', '--no-wrap', '--title=Screenshot Shortcuts', '--text',
+            hotkeys.map(h => `${h[0]} -> ${h[1]}`).join('\n')])
+    },
+    full_to_file() {
+        ensureScreenshotsDirectory();
+        const fileName = bashEval(`printf "%s" "full-$(date +"%Y-%m-%d_%H-%M-%S").png"`);
+        const exitCode = run(`maim "${SCREENSHOTS_DIR}/${fileName}"`);
+        if (exitCode === 0) notify(`Saved full screenshot to ${fileName}`);
+    },
+    area_to_file() {
+        ensureScreenshotsDirectory();
+        const fileName = bashEval(`printf "%s" "area-$(date +"%Y-%m-%d_%H-%M-%S").png"`);
+        const exitCode = run(`maim --select "${SCREENSHOTS_DIR}/${fileName}"`);
+        if (exitCode === 0) notify(`Saved area screenshot to ${fileName}`);
+    },
+    full_to_clipboard() {
+        const exitCode = run(`set -euo pipefail && maim | xclip -selection clipboard -t image/png`)
+        if (exitCode === 0) notify(`Full screenshot send to clipboard`);
+    },
+    area_to_clipboard() {
+        const exitCode = run(`set -euo pipefail && maim --select | xclip -selection clipboard -t image/png`);
+        if (exitCode === 0) notify(`Area screenshot send to clipboard`);
+    }
+}
+
+const ensureScreenshotsDirectory = () => run(`mkdir -p "${SCREENSHOTS_DIR}"`);
+const notify = (msg) => os.exec(['notify-send', msg]);
+const run = (command) => os.exec(['bash', '-c', command]);
+function bashEval(command) {
+    const [output_read, output_write] = os.pipe()
+    os.exec(['bash', '-c', command], { stdout: output_write })
+    os.close(output_write)
+    return std.fdopen(output_read, 'r').readAsString();
+}
+
+main(scriptArgs.splice(1))
