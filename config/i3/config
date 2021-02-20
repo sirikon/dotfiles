@@ -209,6 +209,7 @@ bar {
 ## Keybinds. Use `xev` to debug keys
 bindsym $mod+Shift+s sticky toggle
 bindcode Ctrl+Mod1+87 exec --no-startup-id srk-open jira-task
+bindcode Ctrl+Mod1+88 exec --no-startup-id srk-write stripe-card
 
 ## Window configs
 for_window [title="Volume Control"] floating enable
