@@ -4,6 +4,10 @@ set -e
 
 function stripe-card-text-provider {
     text="$(__pick-stripe-card)"
+    if [ "${text}" = "More cards" ]; then
+        xdg-open "https://stripe.com/docs/testing#cards"
+        exit 0
+    fi
     sleep 0.2
     echo "${text// /}"
 }
