@@ -208,6 +208,7 @@ bar {
 
 ## Keybinds. Use `xev` to debug keys
 bindsym $mod+Shift+s sticky toggle
+bindsym $mod+XF86AudioRaiseVolume exec pavucontrol -t 3
 bindcode Ctrl+Mod1+87 exec --no-startup-id srk-open jira-task
 bindcode Ctrl+Mod1+88 exec --no-startup-id srk-write stripe-card
 
