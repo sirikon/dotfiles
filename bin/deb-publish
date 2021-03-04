@@ -9,9 +9,8 @@ function main {
     printf "%s\n" ""
 
     curl \
-        -F secret="${APT_UPLOAD_SECRET}" \
-        -F package="@${package}" \
-        -F packageName="$(basename "${package}")" \
+        -H "secret: ${APT_UPLOAD_SECRET}" \
+        --data-binary "@${package}" \
         https://apt.srk.bz/upload
 }
 
