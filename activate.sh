@@ -65,4 +65,8 @@ function my-commits-here {
 	smerge search 'author:"Carlos Fdez. Llamas <hello@sirikon.me>"' .
 }
 
+function to-clipboard {
+	xclip -sel clip
+}
+
 prompt-normal

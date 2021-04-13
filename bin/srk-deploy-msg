@@ -1,0 +1,36 @@
+#!/usr/bin/env -S qjs --std
+
+function main(args) {
+    if (args.length === 0) {
+        console.log('Usage: srk-deploy-msg <env> <branch> ...<components>');
+        console.log('  - <components> preceded by \'*\' are considered \'done\'')
+        console.log('  - If all <components> are \'done\', the message is \'all done\'')
+        console.log()
+        console.log('Example:')
+        console.log('  srk-deploy-msg DEV master Front *Back')
+        return;
+    }
+
+    const [env, what, ...rawComponents] = args;
+    const components = rawComponents.map(c => {return{
+        done: c[0] === '*',
+        name: c[0] === '*' ? c.substr(1) : c
+    }})
+
+    const allDone = components.filter((c) => !c.done).length === 0;
+
+    const cactus = allDone ? 'cactus' : 'cactillo-fast';
+    const jenkins = allDone ? 'jenkins-party' : 'jenkins_triggered';
+
+    const text = [
+        `:${cactus}: :${jenkins}: Despliego ${what} en ${env}`,
+        ...components.map(c => `:${c.done ? 'done' : 'loading_fast'}: ${c.name}`)
+    ].join('\n');
+    console.log(text);
+}
+
+try { main(scriptArgs.splice(1)) }
+catch (err) {
+    std.err.puts(`ERROR: ${err.message}\n`);
+    std.exit(1);
+}
