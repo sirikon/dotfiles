@@ -1,4 +1,4 @@
-#!/usr/bin/env -S qjs --std
+#!/usr/bin/env node
 
 function main(args) {
     if (args.length === 0) {
@@ -29,8 +29,7 @@ function main(args) {
     console.log(text);
 }
 
-try { main(scriptArgs.splice(1)) }
+try { main(process.argv.splice(2)) }
 catch (err) {
-    std.err.puts(`ERROR: ${err.message}\n`);
-    std.exit(1);
+    console.log(err);
 }
