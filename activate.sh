@@ -45,6 +45,10 @@ function backup-bilbaoswcraft-newsletter-db {
 	printf "%s\n" "Subscription count: ${subscription_count}"
 }
 
+function sm {
+	smerge -n .
+}
+
 function patch-vscodium-marketplace {
 	productJson="/usr/share/codium/resources/app/product.json"
 	cat "${productJson}" \

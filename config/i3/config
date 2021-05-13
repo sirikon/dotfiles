@@ -229,4 +229,5 @@ bindsym Ctrl+Shift+Print exec --no-startup-id srk-screenshot area_to_clipboard
 ## On start
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id dropbox start
+exec --no-startup-id blueman-applet
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
