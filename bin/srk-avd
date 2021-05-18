@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+function __pick-avd {
+    zenity --list \
+        --title="AVD Picker" \
+        --text="Pick an AVD to start" \
+        --column="Name" $($HOME/Android/Sdk/emulator/emulator -list-avds)
+}
+
+$HOME/Android/Sdk/emulator/emulator -avd "$(__pick-avd)"
