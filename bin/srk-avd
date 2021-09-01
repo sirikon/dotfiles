@@ -4,12 +4,10 @@ EMULATOR_BIN="~/Android/Sdk/emulator/emulator"
 
 f main() {
     avds = getAvds().map(f(avd){'"$avd"'}).join(' ')
-    avd = `
-    zenity --list \
+    avd = `zenity --list \
         --title="AVD Picker" \
         --text="Pick an AVD to start" \
-        --column="Name" $avds
-    `
+        --column="Name" $avds`
     if avd.ok {
         `$EMULATOR_BIN -avd "$avd"`
     }
