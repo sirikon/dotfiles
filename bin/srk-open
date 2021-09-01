@@ -1,25 +1,16 @@
-#!/usr/bin/env bash
+#!/usr/bin/env abs
 
-set -e
-
-function maven-artifact-url-builder {
-    echo "https://mvnrepository.com/artifact/$(echo "${1}" | tr ":" "/")"
+urlBuilders = {
+    "maven-artifact": f(input) {
+        return "https://mvnrepository.com/artifact/" + input.replace(":", "/")
+    },
+    "jira-task": f(input) {
+        return "https://" + env("JIRA_WORKSPACE") + ".atlassian.net/browse/" + input
+    }
 }
 
-function jira-task-url-builder {
-    echo "https://${JIRA_WORKSPACE}.atlassian.net/browse/${1}"
+if args().len() > 2 {
+    urlBuilder = arg(2)
+    url = urlBuilders[urlBuilder](`xclip -out`)
+    `xdg-open "$url"`
 }
-
-function __read_from_user_selection {
-    xclip -out
-}
-
-function __open_url {
-    xdg-open "$1"
-}
-
-text="$(__read_from_user_selection)"
-if [ -n "${text}" ]; then
-    url="$("${1}-url-builder" "${text}")"
-    __open_url "$url"
-fi

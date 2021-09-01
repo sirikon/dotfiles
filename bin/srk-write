@@ -1,34 +1,50 @@
-#!/usr/bin/env bash
+#!/usr/bin/env abs
 
-set -e
+stripeCards = [
+    { "number": "4242 4242 4242 4242", "setup": true,   "pay": true,                 "sca": "" },
+    { "number": "4000 0000 0000 0341", "setup": true,   "pay": false,                "sca": "" },
+    { "number": "4000 0000 0000 9995", "setup": true,   "pay": "insufficient_funds", "sca": "" },
+    { "number": "4000 0000 0000 9987", "setup": true,   "pay": "lost_card",          "sca": "" },
+    { "number": "4000 0000 0000 9979", "setup": true,   "pay": "stolen_card",        "sca": "" },
+    { "number": "4000 0027 6000 3184", "setup": true,   "pay": true,                 "sca": "Always" },
+    { "number": "4000 0535 6000 0011", "setup": false,  "pay": false,                "sca": "" }
+]
 
-function stripe-card-text-provider {
-    text="$(__pick-stripe-card)"
-    if [ "${text}" = "More cards" ]; then
-        xdg-open "https://stripe.com/docs/testing#cards"
-        exit 0
-    fi
-    sleep 0.2
-    echo "${text// /}"
+providers = {
+    "stripe-card": f() {
+        data = stripeCards.map(f(card){
+            if (card.setup) { setup = "✔️" }
+            else { setup = "❌" }
+            
+            if (card.pay == true) { pay = "✔️" }
+            else if (card.pay == false) { pay = "❌" }
+            else { pay = "❌ " + card.pay }
+
+            return [card.number, setup, pay, card.sca]
+                .map(f(t){'"$t"'}).join(' ');
+        }).join(" ")
+
+        output = `
+            zenity --list \
+                --title="Stripe Card Picker" \
+                --width="500" \
+                --height="300" \
+                --text="Pick a credit card" \
+                --extra-button="More cards" \
+                --column="Number" --column="Setup" --column="Pay" --column="SCA" \
+                $data \
+                || exit 0
+        `
+        if output == "More cards" {
+            `xdg-open "https://stripe.com/docs/testing#cards"`
+            exit(0)
+        }
+        return output.replace(" ", "")
+    }
 }
 
-function __pick-stripe-card {
-    zenity --list \
-        --title="Stripe Card Picker" \
-        --width="500" \
-        --height="300" \
-        --text="Pick a credit card" \
-        --extra-button="More cards" \
-        --column="Number" --column="Setup" --column="Pay" --column="SCA" \
-        \
-        "4242 4242 4242 4242" ✔️  "✔️"                     "" \
-        "4000 0000 0000 0341" ✔️  "❌"                    "" \
-        "4000 0000 0000 9995" ✔️  "❌ insufficient_funds" "" \
-        "4000 0000 0000 9987" ✔️  "❌ lost_card"          "" \
-        "4000 0000 0000 9979" ✔️  "❌ stolen_card"        "" \
-        "4000 0027 6000 3184" ✔️  "✔️"                     "Always" \
-        "4000 0535 6000 0011" ❌ "❌"                    ""
+if args().len() > 2 {
+    provider = arg(2)
+    text = providers[provider]()
+    `xdotool type --delay 100 "$text"`
 }
-
-text="$("${1}-text-provider")"
-xdotool type --delay 100 "$text"
