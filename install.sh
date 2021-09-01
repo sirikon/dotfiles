@@ -5,30 +5,40 @@ ROOT="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 cd "$ROOT"
 
 function main {
+    ensure-sudo
+
     extend-bashrc
+    link-i3
+    
+    apt-install \
+        "fonts-noto-color-emoji" \
+        "i3blocks" \
+        "gnome-terminal" \
+        "maim" \
+        "xclip"
+}
 
-    link-folder-if-not-exists "${ROOT}/config/i3" ~/.config/i3
-    link-folder-if-not-exists "${ROOT}/config/i3status" ~/.config/i3status
-    link-folder-if-not-exists "${ROOT}/config/i3blocks" ~/.config/i3blocks
-
-    pacman-install \
-        vim dmenu gnome-terminal i3blocks firefox pamac \
-        pavucontrol terminus-font noto-fonts-emoji ttf-dejavu \
-        polkit-gnome nitrogen openssh code xorg-xbacklight \
-        keepassxc zenity
-
-    sudo apt update && sudo apt install \
-        fonts-noto-color-emoji i3blocks gnome-terminal maim xclip
-
-    prevent-dropbox-self-update
+function ensure-sudo {
+    log-title "Ensuring SUDO access"
+    sudo printf "%s" ""
+    log "SUDO obtained"
 }
 
 function extend-bashrc {
+    log-title "Extending ~.bashrc"
     if [ "$(grep -c "# Sirikon dotfiles" ~/.bashrc)" == 0 ]; then
         bashrc-fragment >> ~/.bashrc
+        log "Done."
     else
-        printf "%s\n" "Activation script already exists in .bashrc"
+        log "Activation script already exists in ~.bashrc. Skipping."
     fi
+}
+
+function link-i3 {
+    log-title "Linking i3 folders"
+    link-folder-if-not-exists "${ROOT}/config/i3" ~/.config/i3
+    link-folder-if-not-exists "${ROOT}/config/i3status" ~/.config/i3status
+    link-folder-if-not-exists "${ROOT}/config/i3blocks" ~/.config/i3blocks
 }
 
 function link-folder-if-not-exists {
@@ -37,23 +47,15 @@ function link-folder-if-not-exists {
 
     if [ ! -d "$target" ]; then
         ln -s "$source" "$target"
+        log "${target} done."
     else
-        printf "%s\n" "Link: skipping ${source}"
+        log "${target} skipped."
     fi
 }
 
-function pacman-install {
-    if command -v pacman &> /dev/null; then
-        sudo pacman -Syu --needed "$@"
-    else
-        printf "%s\n" "pacman not found. Skipping"
-    fi
-}
-
-function prevent-dropbox-self-update {
-    # https://wiki.archlinux.org/index.php/Dropbox#Prevent_automatic_updates
-    rm -rf ~/.dropbox-dist
-    install -dm0 ~/.dropbox-dist
+function apt-install {
+    log-title "Installing dependencies using APT"
+    sudo apt update && sudo apt install "${@}"
 }
 
 function bashrc-fragment {
@@ -62,6 +64,14 @@ function bashrc-fragment {
 # Sirikon dotfiles
 source $(pwd)/activate.sh
 EOF
+}
+
+function log-title {
+    printf "\n\e[1m\e[38;5;208m#\e[0m \e[1m%s\e[0m\n" "${1}" 1>&2
+}
+
+function log {
+    printf "  %s\n" "${1}" 1>&2
 }
 
 main "$@"
