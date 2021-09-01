@@ -13,12 +13,10 @@ stripeCards = [
 providers = {
     "stripe-card": f() {
         data = stripeCards.map(f(card){
-            if (card.setup) { setup = "✔️" }
-            else { setup = "❌" }
-            
-            if (card.pay == true) { pay = "✔️" }
-            else if (card.pay == false) { pay = "❌" }
-            else { pay = "❌ " + card.pay }
+            setup = card.setup && "✔️" || "❌"
+            pay = type(card.pay) == "BOOLEAN"
+                && (card.pay && "✔️" || "❌")
+                || "❌ " + card.pay
 
             return [card.number, setup, pay, card.sca]
                 .map(f(t){'"$t"'}).join(' ');
