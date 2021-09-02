@@ -29,7 +29,7 @@ providers = {
             zenity --list \
                 --title="Stripe Card Picker" \
                 --width="500" \
-                --height="300" \
+                --height="350" \
                 --text="Pick a credit card" \
                 --extra-button="More cards" \
                 --column="Number" --column="Setup" --column="3DS" --column="Pay" \
