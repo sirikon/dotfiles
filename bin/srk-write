@@ -1,51 +1,48 @@
-#!/usr/bin/env abs
+#!/usr/bin/env python3
+import subprocess, sys
 
 stripeCards = [
-    { "number": "4242 4242 4242 4242", "setup": true,  "3ds": false, "pay": true,                 },
-    { "number": "4000 0000 0000 0341", "setup": true,  "3ds": false, "pay": false,                },
-    { "number": "4000 0000 0000 9995", "setup": true,  "3ds": false, "pay": "insufficient_funds", },
-    { "number": "4000 0000 0000 9987", "setup": true,  "3ds": false, "pay": "lost_card",          },
-    { "number": "4000 0000 0000 9979", "setup": true,  "3ds": false, "pay": "stolen_card",        },
-    { "number": "4000 0027 6000 3184", "setup": true,  "3ds": true,  "pay": true,                 },
-    { "number": "4000 0082 6000 3178", "setup": true,  "3ds": true,  "pay": "insufficient_funds", },
-    { "number": "4000 0535 6000 0011", "setup": false, "3ds": false, "pay": false,                }
+    { "number": "4242 4242 4242 4242", "setup": True,  "3ds": False, "pay": True,                 },
+    { "number": "4000 0000 0000 0341", "setup": True,  "3ds": False, "pay": False,                },
+    { "number": "4000 0000 0000 9995", "setup": True,  "3ds": False, "pay": "insufficient_funds", },
+    { "number": "4000 0000 0000 9987", "setup": True,  "3ds": False, "pay": "lost_card",          },
+    { "number": "4000 0000 0000 9979", "setup": True,  "3ds": False, "pay": "stolen_card",        },
+    { "number": "4000 0027 6000 3184", "setup": True,  "3ds": True,  "pay": True,                 },
+    { "number": "4000 0082 6000 3178", "setup": True,  "3ds": True,  "pay": "insufficient_funds", },
+    { "number": "4000 0535 6000 0011", "setup": False, "3ds": False, "pay": False,                }
 ]
 
+def provideStripeCard():
+    data = []
+    for card in stripeCards:
+        setup = "✔️" if card["setup"] else "❌"
+        pay = ("✔️" if card["pay"] else "❌") if type(card["pay"]) is bool else "❌ " + card["pay"]
+        _3ds = "⚠️" if card["3ds"] else ""
+
+        data += [card["number"], setup, _3ds, pay]
+    
+    result = subprocess.run(["zenity", "--list",
+        "--title=Stripe Card Picker",
+        "--width=500",
+        "--height=350",
+        "--text=Pick a credit card",
+        "--extra-button=More cards",
+        "--column=Number", "--column=Setup", "--column=3DS", "--column=Pay",
+        ] + data, stdout=subprocess.PIPE, text=True)
+    
+    if result.stdout == 'More cards\n':
+        subprocess.run(["xdg-open", "https://stripe.com/docs/testing#cards"])
+        exit(0)
+    
+    return result.stdout \
+        .replace(" ", "") \
+        .replace("\n", "")
+
 providers = {
-    "stripe-card": f() {
-        data = stripeCards.map(f(card){
-            setup = card.setup && "✔️" || "❌"
-            pay = type(card.pay) == "BOOLEAN"
-                && (card.pay && "✔️" || "❌")
-                || "❌ " + card.pay
-
-            tds = card["3ds"] && "⚠️" || ""
-
-            return [card.number, setup, tds, pay]
-                .map(f(t){'"$t"'}).join(' ');
-        }).join(" ")
-
-        output = `
-            zenity --list \
-                --title="Stripe Card Picker" \
-                --width="500" \
-                --height="350" \
-                --text="Pick a credit card" \
-                --extra-button="More cards" \
-                --column="Number" --column="Setup" --column="3DS" --column="Pay" \
-                $data \
-                || exit 0
-        `
-        if output == "More cards" {
-            `xdg-open "https://stripe.com/docs/testing#cards"`
-            exit(0)
-        }
-        return output.replace(" ", "")
-    }
+    "stripe-card": provideStripeCard
 }
 
-if args().len() > 2 {
-    provider = arg(2)
+if len(sys.argv) > 1:
+    provider = sys.argv[1]
     text = providers[provider]()
-    `xdotool type --delay 100 "$text"`
-}
+    subprocess.run(["xdotool", "type", "--delay", "100", text])
