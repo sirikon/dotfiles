@@ -1,13 +1,14 @@
 #!/usr/bin/env abs
 
 stripeCards = [
-    { "number": "4242 4242 4242 4242", "setup": true,   "pay": true,                 "sca": "" },
-    { "number": "4000 0000 0000 0341", "setup": true,   "pay": false,                "sca": "" },
-    { "number": "4000 0000 0000 9995", "setup": true,   "pay": "insufficient_funds", "sca": "" },
-    { "number": "4000 0000 0000 9987", "setup": true,   "pay": "lost_card",          "sca": "" },
-    { "number": "4000 0000 0000 9979", "setup": true,   "pay": "stolen_card",        "sca": "" },
-    { "number": "4000 0027 6000 3184", "setup": true,   "pay": true,                 "sca": "Always" },
-    { "number": "4000 0535 6000 0011", "setup": false,  "pay": false,                "sca": "" }
+    { "number": "4242 4242 4242 4242", "setup": true,  "3ds": false, "pay": true,                 },
+    { "number": "4000 0000 0000 0341", "setup": true,  "3ds": false, "pay": false,                },
+    { "number": "4000 0000 0000 9995", "setup": true,  "3ds": false, "pay": "insufficient_funds", },
+    { "number": "4000 0000 0000 9987", "setup": true,  "3ds": false, "pay": "lost_card",          },
+    { "number": "4000 0000 0000 9979", "setup": true,  "3ds": false, "pay": "stolen_card",        },
+    { "number": "4000 0027 6000 3184", "setup": true,  "3ds": true,  "pay": true,                 },
+    { "number": "4000 0082 6000 3178", "setup": true,  "3ds": true,  "pay": "insufficient_funds", },
+    { "number": "4000 0535 6000 0011", "setup": false, "3ds": false, "pay": false,                }
 ]
 
 providers = {
@@ -18,7 +19,9 @@ providers = {
                 && (card.pay && "✔️" || "❌")
                 || "❌ " + card.pay
 
-            return [card.number, setup, pay, card.sca]
+            tds = card["3ds"] && "⚠️" || ""
+
+            return [card.number, setup, tds, pay]
                 .map(f(t){'"$t"'}).join(' ');
         }).join(" ")
 
@@ -29,7 +32,7 @@ providers = {
                 --height="300" \
                 --text="Pick a credit card" \
                 --extra-button="More cards" \
-                --column="Number" --column="Setup" --column="Pay" --column="SCA" \
+                --column="Number" --column="Setup" --column="3DS" --column="Pay" \
                 $data \
                 || exit 0
         `
