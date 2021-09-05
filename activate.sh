@@ -65,6 +65,13 @@ function upgrade-youtube-dl {
 		"GRACIAS EKAITZ AMO Y SEÑOR, MASTER OF THE PUPPETS"
 }
 
+function upgrade-minecraft-launcher {(
+	cd ~/Documents
+	rm -f Minecraft.deb
+	wget "https://launcher.mojang.com/download/Minecraft.deb"
+	sudo apt install ./Minecraft.deb
+)}
+
 function my-commits-here {
 	smerge search 'author:"Carlos Fdez. Llamas <hello@sirikon.me>"' .
 }
