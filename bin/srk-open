@@ -1,16 +1,22 @@
-#!/usr/bin/env abs
+#!/usr/bin/env python3
+import sys
+from os import environ
+from subprocess import run, PIPE
 
-urlBuilders = {
-    "maven-artifact": f(input) {
-        return "https://mvnrepository.com/artifact/" + input.replace(":", "/")
-    },
-    "jira-task": f(input) {
-        return "https://" + env("JIRA_WORKSPACE") + ".atlassian.net/browse/" + input
-    }
+def maven_artifact(input):
+    artifact_name = input.replace(":", "/")
+    return f"https://mvnrepository.com/artifact/{artifact_name}"
+
+def jira_task(input):
+    jira_workspace = environ.get("JIRA_WORKSPACE")
+    return f"https://{jira_workspace}.atlassian.net/browse/{input}"
+
+url_builders = {
+    "maven-artifact": maven_artifact,
+    "jira-task": jira_task
 }
 
-if args().len() > 2 {
-    urlBuilder = arg(2)
-    url = urlBuilders[urlBuilder](`xclip -out`)
-    `xdg-open "$url"`
-}
+if len(sys.argv) > 1:
+    url_builder = url_builders[sys.argv[1]]
+    url = url_builder(run(['xclip', '-out'], stdout=PIPE, text=True).stdout)
+    run(['xdg-open', url])
