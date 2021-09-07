@@ -9,8 +9,11 @@ function main {
 
     extend-bashrc
     link-i3
+
+    link-bins
     
     apt-install \
+        "dunst" \
         "fonts-noto-color-emoji" \
         "i3blocks" \
         "gnome-terminal" \
@@ -52,6 +55,19 @@ function link-folder-if-not-exists {
         log "${target} skipped."
     fi
 }
+
+function link-bins {(
+    log-title "Linking /bin/* to ~/bin/*"
+
+    cd bin
+    for f in *; do
+        if [[ -f $f ]]; then
+            rm -f ~/bin/$f
+            ln -s "$(pwd)/$f" ~/bin/$f
+            log "$f -> OK"
+        fi
+    done
+)}
 
 function apt-install {
     log-title "Installing dependencies using APT"
