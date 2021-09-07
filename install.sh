@@ -14,6 +14,7 @@ function main {
     
     apt-install \
         "dunst" \
+        "python3" \
         "fonts-noto-color-emoji" \
         "i3blocks" \
         "gnome-terminal" \
