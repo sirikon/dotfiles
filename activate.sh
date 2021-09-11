@@ -39,12 +39,6 @@ function used-ports {
 	sudo lsof -i -P -n | grep LISTEN
 }
 
-function backup-bilbaoswcraft-newsletter-db {
-	scp root@116.203.231.200:/var/lib/buletina/data.db ~/Dropbox/Backup/BilbaoSWCraft_Newsletter/data.db
-	subscription_count=$(sqlite3 ~/Dropbox/Backup/BilbaoSWCraft_Newsletter/data.db "SELECT COUNT(1) FROM subscriptions;")
-	printf "%s\n" "Subscription count: ${subscription_count}"
-}
-
 function sm {
 	smerge -n .
 }
@@ -56,13 +50,6 @@ function patch-vscodium-marketplace {
 		| jq '.extensionsGallery.itemUrl = "https://marketplace.visualstudio.com/items"' \
 		| jq -M \
 		| sudo tee "${productJson}" > /dev/null
-}
-
-function upgrade-youtube-dl {
-	sudo -H pip3 install --upgrade youtube-dl
-	printf "%s\n" \
-		"" \
-		"GRACIAS EKAITZ AMO Y SEÑOR, MASTER OF THE PUPPETS"
 }
 
 function upgrade-minecraft-launcher {(
