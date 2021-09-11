@@ -4,8 +4,10 @@ from subprocess import run, PIPE
 def main():
     print('🖥️ ', end='')
 
-    network_cards_info = [(card, get_network_card_ip(card)) for card in get_current_network_cards()]
-    parts = ['<span color="gray">' + i[0] + ':</span>' + i[1] for i in network_cards_info]
+    parts = []
+    for card in get_current_network_cards():
+        ip = get_network_card_ip(card)
+        parts.append(f'<span color="gray">{card}:</span>{ip}')
 
     print(' '.join(parts))
 
