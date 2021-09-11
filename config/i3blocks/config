@@ -11,6 +11,7 @@ interval=once
 
 [lan-ip]
 interval=60
+markup=pango
 
 [volume]
 interval=once
