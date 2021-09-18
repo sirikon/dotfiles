@@ -13,7 +13,7 @@ function main {
         "firefox-esr" "vim" "arandr" \
         "pulseaudio" "pavucontrol" \
         "nitrogen" "dunst" \
-        "python3" "python3-pip" \
+        "python3" "python3-pip" "python3-venv" \
         "fwupd" \
         "fonts-noto-color-emoji" \
         "i3blocks" \

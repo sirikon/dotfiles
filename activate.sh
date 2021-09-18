@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-PATH="$(realpath "$(dirname "${BASH_SOURCE[0]}")")/bin:${PATH}"
-export PATH
+export PATH=$PATH:~/.local/bin
 
 function git_branch {
 	branch=$(git branch 2>/dev/null | grep '^\*' | colrm 1 2)
