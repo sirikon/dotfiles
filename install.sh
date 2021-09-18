@@ -7,15 +7,9 @@ cd "$ROOT"
 function main {
     ensure-sudo
 
-    extend-bashrc
-    link-i3
-    link-xfce4-terminal
-    link-x
-
-    link-bins
-
     apt-install \
         "xorg" "i3" "lightdm" \
+        "network-manager" "network-manager-gnome" \
         "firefox-esr" "vim" "arandr" \
         "pulseaudio" "pavucontrol" \
         "nitrogen" "dunst" \
@@ -25,6 +19,16 @@ function main {
         "xfce4-terminal" \
         "maim" "blueman" \
         "xclip"
+
+    link-i3
+    link-xfce4-terminal
+    link-x
+
+    link-bins
+
+    configure-networking
+
+    extend-bashrc
 }
 
 function ensure-sudo {
@@ -58,6 +62,19 @@ function link-xfce4-terminal {
 function link-x {
     log-title "Linking X config"
     link-force "${ROOT}/config/x/Xresources" ~/.Xresources
+}
+
+function configure-networking {
+    sudo systemctl disable systemd-networkd systemd-networkd.socket systemd-networkd-wait-online
+    sudo systemctl stop systemd-networkd systemd-networkd.socket systemd-networkd-wait-online
+
+    sudo systemctl disable systemd-resolved
+    sudo systemctl stop systemd-resolved
+
+    sudo rm /etc/network/interfaces
+
+    sudo systemctl enable NetworkManager
+    sudo systemctl start NetworkManager
 }
 
 function link-force {
