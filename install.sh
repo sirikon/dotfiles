@@ -76,7 +76,7 @@ function link-bins {(
 
 function apt-install {
     log-title "Installing dependencies using APT"
-    sudo apt update && sudo apt install "${@}"
+    sudo apt update && sudo apt install -y "${@}"
 }
 
 function bashrc-fragment {
