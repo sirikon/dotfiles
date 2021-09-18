@@ -13,6 +13,8 @@ function main {
     link-bins
     
     apt-install \
+        "xorg" "i3" "lightdm" \
+        "pulseaudio" "pavucontrol" \
         "dunst" \
         "python3" \
         "fonts-noto-color-emoji" \
