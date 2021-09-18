@@ -14,6 +14,7 @@ function main {
     
     apt-install \
         "xorg" "i3" "lightdm" \
+        "firefox-esr" \
         "pulseaudio" "pavucontrol" \
         "dunst" \
         "python3" \
