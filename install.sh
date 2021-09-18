@@ -9,12 +9,13 @@ function main {
 
     extend-bashrc
     link-i3
+    link-x
 
     link-bins
-    
+
     apt-install \
         "xorg" "i3" "lightdm" \
-        "firefox-esr" \
+        "firefox-esr" "vim" \
         "pulseaudio" "pavucontrol" \
         "dunst" \
         "python3" \
@@ -43,12 +44,17 @@ function extend-bashrc {
 
 function link-i3 {
     log-title "Linking i3 folders"
-    link-folder-if-not-exists "${ROOT}/config/i3" ~/.config/i3
-    link-folder-if-not-exists "${ROOT}/config/i3status" ~/.config/i3status
-    link-folder-if-not-exists "${ROOT}/config/i3blocks" ~/.config/i3blocks
+    link-if-not-exists "${ROOT}/config/i3" ~/.config/i3
+    link-if-not-exists "${ROOT}/config/i3status" ~/.config/i3status
+    link-if-not-exists "${ROOT}/config/i3blocks" ~/.config/i3blocks
 }
 
-function link-folder-if-not-exists {
+function link-x {
+    log-title "Linking X config"
+    link-if-not-exists "${ROOT}/config/x/Xresources" ~/.Xresources
+}
+
+function link-if-not-exists {
     source="$1"
     target="$2"
 
