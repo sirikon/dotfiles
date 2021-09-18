@@ -62,6 +62,7 @@ function link-folder-if-not-exists {
 
 function link-bins {(
     log-title "Linking /bin/* to ~/bin/*"
+    mkdir -p ~/bin
 
     cd bin
     for f in *; do
