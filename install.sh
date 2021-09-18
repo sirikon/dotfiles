@@ -22,7 +22,7 @@ function main {
         "python3" \
         "fonts-noto-color-emoji" \
         "i3blocks" \
-        "gnome-terminal" \
+        "xfce4-terminal" \
         "maim" "blueman" \
         "xclip"
 }
