@@ -52,6 +52,7 @@ function link-folder-if-not-exists {
     target="$2"
 
     if [ ! -d "$target" ]; then
+        mkdir -p "$(dirname "$target")"
         ln -s "$source" "$target"
         log "${target} done."
     else
