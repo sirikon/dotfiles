@@ -9,6 +9,7 @@ function main {
 
     extend-bashrc
     link-i3
+    link-xfce4-terminal
     link-x
 
     link-bins
@@ -47,6 +48,11 @@ function link-i3 {
     link-force "${ROOT}/config/i3" ~/.config/i3
     link-force "${ROOT}/config/i3status" ~/.config/i3status
     link-force "${ROOT}/config/i3blocks" ~/.config/i3blocks
+}
+
+function link-xfce4-terminal {
+    log-title "Linking xfce4-terminal config"
+    link-force "${ROOT}/config/xfce4-terminal/terminalrc" ~/.config/xfce4/terminal/terminalrc
 }
 
 function link-x {
