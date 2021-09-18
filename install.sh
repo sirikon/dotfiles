@@ -17,7 +17,7 @@ function main {
         "xorg" "i3" "lightdm" \
         "firefox-esr" "vim" "arandr" \
         "pulseaudio" "pavucontrol" \
-        "dunst" \
+        "nitrogen" "dunst" \
         "python3" \
         "fonts-noto-color-emoji" \
         "i3blocks" \
