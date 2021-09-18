@@ -44,27 +44,24 @@ function extend-bashrc {
 
 function link-i3 {
     log-title "Linking i3 folders"
-    link-if-not-exists "${ROOT}/config/i3" ~/.config/i3
-    link-if-not-exists "${ROOT}/config/i3status" ~/.config/i3status
-    link-if-not-exists "${ROOT}/config/i3blocks" ~/.config/i3blocks
+    link-force "${ROOT}/config/i3" ~/.config/i3
+    link-force "${ROOT}/config/i3status" ~/.config/i3status
+    link-force "${ROOT}/config/i3blocks" ~/.config/i3blocks
 }
 
 function link-x {
     log-title "Linking X config"
-    link-if-not-exists "${ROOT}/config/x/Xresources" ~/.Xresources
+    link-force "${ROOT}/config/x/Xresources" ~/.Xresources
 }
 
-function link-if-not-exists {
+function link-force {
     source="$1"
     target="$2"
 
-    if [ ! -d "$target" ]; then
-        mkdir -p "$(dirname "$target")"
-        ln -s "$source" "$target"
-        log "${target} done."
-    else
-        log "${target} skipped."
-    fi
+    rm -rf "$target"
+    mkdir -p "$(dirname "$target")"
+    ln -s "$source" "$target"
+    log "${target} done."
 }
 
 function link-bins {(
