@@ -21,6 +21,8 @@ function main {
         "maim" "blueman" \
         "xclip"
 
+    install-pipx
+
     link-i3
     link-xfce4-terminal
     link-x
@@ -46,6 +48,10 @@ function extend-bashrc {
     else
         log "Activation script already exists in ~.bashrc. Skipping."
     fi
+}
+
+function install-pipx {
+    pip3 install pipx
 }
 
 function link-i3 {
