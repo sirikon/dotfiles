@@ -19,7 +19,7 @@ function main {
         "firefox-esr" "vim" "arandr" \
         "pulseaudio" "pavucontrol" \
         "nitrogen" "dunst" \
-        "python3" \
+        "python3" "fwupd" \
         "fonts-noto-color-emoji" \
         "i3blocks" \
         "xfce4-terminal" \
