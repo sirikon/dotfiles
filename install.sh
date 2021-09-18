@@ -22,7 +22,7 @@ function main {
         "fonts-noto-color-emoji" \
         "i3blocks" \
         "gnome-terminal" \
-        "maim" \
+        "maim" "blueman" \
         "xclip"
 }
 
