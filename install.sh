@@ -90,7 +90,7 @@ function install-telegram {
             rmdir t
             rm telegram.tar.xz
             mkdir -p ~/bin
-            ln -s $(pwd)/Telegram ~/bin/telegram
+            ln -s "$(pwd)/Telegram" ~/bin/telegram
         )
     fi
 }
