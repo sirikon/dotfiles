@@ -172,9 +172,7 @@ function configure-extra-repositories {
     curl -sL https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
     echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
 
-    curl -sL https://packagecloud.io/slacktechnologies/slack/gpgkey | sudo apt-key add -
-    echo "deb https://packagecloud.io/slacktechnologies/slack/debian/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/slack.list
-    echo "deb-src https://packagecloud.io/slacktechnologies/slack/debian/ $(lsb_release -cs) main" | sudo tee -a /etc/apt/sources.list.d/slack.list
+    curl -s https://packagecloud.io/install/repositories/slacktechnologies/slack/script.deb.sh | sudo bash
 
     sudo rm -f /usr/share/keyrings/docker-archive-keyring.gpg
     curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
