@@ -20,7 +20,7 @@ function main {
         "pulseaudio" "pavucontrol" \
         "nitrogen" "dunst" \
         "python3" "python3-pip" "python3-venv" \
-        "fwupd" \
+        "fwupd" "policykit-1-gnome" \
         "fonts-noto-color-emoji" \
         "i3blocks" \
         "xfce4-terminal" \
