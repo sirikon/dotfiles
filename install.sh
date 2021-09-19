@@ -33,6 +33,7 @@ function main {
 
     link-i3
     link-xfce4-terminal
+    link-sublime-merge
     link-x
 
     link-bins
@@ -75,6 +76,11 @@ function link-i3 {
 function link-xfce4-terminal {
     log-title "Linking xfce4-terminal config"
     link-force "${ROOT}/config/xfce4-terminal/terminalrc" ~/.config/xfce4/terminal/terminalrc
+}
+
+function link-sublime-merge {
+    log-title "Linking sublime merge config"
+    link-force "${ROOT}/config/sublime-merge/Preferences.sublime-settings" ~/.config/sublime-merge/Packages/User/Preferences.sublime-settings
 }
 
 function link-x {
