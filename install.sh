@@ -25,12 +25,13 @@ function main {
         "i3blocks" \
         "xfce4-terminal" \
         "maim" "blueman" \
-        "xclip" \
+        "xclip" "xz-utils" \
         "docker-ce" "docker-ce-cli" "containerd.io" \
         "dbeaver-ce" "sublime-text" "sublime-merge"
 
     install-pipx
     install-asdf
+    install-telegram
 
     link-i3
     link-xfce4-terminal
@@ -71,6 +72,21 @@ function install-asdf {
     log-title "Installing asdf vm"
     if [ ! -d ~/.asdf ]; then
         git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1
+    fi
+}
+
+function install-telegram {
+    log-title "Installing telegram"
+    if [ ! -d ~/Software/Telegram ]; then
+        (
+            mkdir -p ~/Software/Telegram
+            cd ~/Software/Telegram
+            wget -O telegram.tar.xz https://telegram.org/dl/desktop/linux
+            tar -xf telegram.tar.xz
+            mv Telegram t
+            mv t/* .
+            rmdir t
+        )
     fi
 }
 
