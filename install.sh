@@ -39,6 +39,7 @@ function main {
 
     configure-networking
     configure-wallpaper || echo ""
+    configure-docker-user
 
     extend-bashrc
 }
@@ -103,6 +104,12 @@ function configure-wallpaper {
     nitrogen --set-zoom-fill "${ROOT}/assets/wallpapers/klaus-outside-winter.jpg" 2> /dev/null
 }
 
+function configure-docker-user {
+    log-title "Configuring docker user"
+    sudo groupadd docker || "Group already exists"
+    sudo usermod -aG docker "$USER"
+}
+
 function link-force {
     source="$1"
     target="$2"
@@ -128,6 +135,8 @@ function link-bins {(
 )}
 
 function configure-extra-repositories {
+    log-title "Configuring extra repositories"
+
     curl -s https://dbeaver.io/debs/dbeaver.gpg.key | sudo apt-key add -
     echo "deb https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
 
