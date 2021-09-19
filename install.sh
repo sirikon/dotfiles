@@ -106,7 +106,7 @@ function configure-wallpaper {
 
 function configure-docker-user {
     log-title "Configuring docker user"
-    sudo groupadd docker || "Group already exists"
+    sudo groupadd docker || echo "Group already exists"
     sudo usermod -aG docker "$USER"
 }
 
