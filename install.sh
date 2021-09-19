@@ -9,7 +9,7 @@ function main {
 
     apt-install \
         "apt-transport-https" "ca-certificates" \
-        "curl" "git" "gnupg" "lsb-release"
+        "curl" "git" "gnupg" "lsb-release" "debian-archive-keyring"
 
     configure-extra-repositories
 
@@ -20,7 +20,7 @@ function main {
         "pulseaudio" "pavucontrol" \
         "nitrogen" "dunst" \
         "python3" "python3-pip" "python3-venv" \
-        "fwupd" \
+        "fwupd" "slack" \
         "fonts-noto-color-emoji" \
         "i3blocks" \
         "xfce4-terminal" \
@@ -166,11 +166,15 @@ function link-bins {(
 function configure-extra-repositories {
     log-title "Configuring extra repositories"
 
-    curl -s https://dbeaver.io/debs/dbeaver.gpg.key | sudo apt-key add -
+    curl -sL https://dbeaver.io/debs/dbeaver.gpg.key | sudo apt-key add -
     echo "deb https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
 
-    curl -s https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
+    curl -sL https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
     echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
+
+    curl -sL https://packagecloud.io/slacktechnologies/slack/gpgkey | sudo apt-key add -
+    echo "deb https://packagecloud.io/slacktechnologies/slack/debian/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/slack.list
+    echo "deb-src https://packagecloud.io/slacktechnologies/slack/debian/ $(lsb_release -cs) main" | sudo tee -a /etc/apt/sources.list.d/slack.list
 
     sudo rm -f /usr/share/keyrings/docker-archive-keyring.gpg
     curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
