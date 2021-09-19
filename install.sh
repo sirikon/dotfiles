@@ -30,6 +30,7 @@ function main {
     link-bins
 
     configure-networking
+    configure-wallpaper
 
     extend-bashrc
 }
@@ -82,6 +83,12 @@ function configure-networking {
 
     sudo systemctl enable NetworkManager
     sudo systemctl start NetworkManager
+}
+
+function configure-wallpaper {
+    # nitrogen --head=0 --set-zoom-fill "${ROOT}/assets/wallpapers/klaus-workshop.jpg"
+    # nitrogen --head=1 --set-zoom-fill "${ROOT}/assets/wallpapers/klaus-workshop.jpg"
+    nitrogen --set-zoom-fill "${ROOT}/assets/wallpapers/klaus-outside-winter.jpg"
 }
 
 function link-force {
