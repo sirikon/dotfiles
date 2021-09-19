@@ -30,7 +30,7 @@ function main {
     link-bins
 
     configure-networking
-    configure-wallpaper
+    configure-wallpaper || echo ""
 
     extend-bashrc
 }
