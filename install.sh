@@ -9,7 +9,7 @@ function main {
 
     apt-install \
         "apt-transport-https" "ca-certificates" \
-        "curl" "gnupg" "lsb-release"
+        "curl" "git" "gnupg" "lsb-release"
 
     configure-extra-repositories
 
@@ -30,6 +30,7 @@ function main {
         "dbeaver-ce" "sublime-text" "sublime-merge"
 
     install-pipx
+    install-asdf
 
     link-i3
     link-xfce4-terminal
@@ -40,7 +41,6 @@ function main {
 
     configure-git
     configure-networking
-    configure-wallpaper || echo ""
     configure-docker-user
 
     extend-bashrc
@@ -65,6 +65,13 @@ function extend-bashrc {
 function install-pipx {
     log-title "Installing pipx"
     pip3 install pipx
+}
+
+function install-asdf {
+    log-title "Installing asdf vm"
+    if [ ! -d ~/.asdf ]; then
+        git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1
+    fi
 }
 
 function link-i3 {
@@ -108,13 +115,6 @@ function configure-networking {
 
     sudo systemctl enable NetworkManager
     sudo systemctl start NetworkManager
-}
-
-function configure-wallpaper {
-    log-title "Configuring wallpaper"
-    # nitrogen --save --head=0 --set-zoom-fill "${ROOT}/assets/wallpapers/klaus-workshop.jpg"
-    # nitrogen --save --head=1 --set-zoom-fill "${ROOT}/assets/wallpapers/klaus-workshop.jpg"
-    nitrogen --save --set-zoom-fill "${ROOT}/assets/wallpapers/klaus-outside-winter.jpg" 2> /dev/null
 }
 
 function configure-docker-user {
