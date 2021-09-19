@@ -32,6 +32,7 @@ function main {
     install-pipx
     install-asdf
     install-telegram
+    install-docker-compose
 
     link-i3
     link-xfce4-terminal
@@ -92,6 +93,10 @@ function install-telegram {
             ln -s $(pwd)/Telegram ~/bin/telegram
         )
     fi
+}
+
+function install-docker-compose {
+    pipx install docker-compose
 }
 
 function link-i3 {
