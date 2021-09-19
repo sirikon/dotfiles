@@ -8,6 +8,12 @@ function main {
     ensure-sudo
 
     apt-install \
+        "apt-transport-https" "ca-certificates" \
+        "curl" "gnupg" "lsb-release"
+
+    configure-extra-repositories
+
+    apt-install \
         "xorg" "i3" "lightdm" \
         "network-manager" "network-manager-gnome" \
         "firefox-esr" "vim" "arandr" \
@@ -19,7 +25,9 @@ function main {
         "i3blocks" \
         "xfce4-terminal" \
         "maim" "blueman" \
-        "xclip"
+        "xclip" \
+        "docker-ce" "docker-ce-cli" "containerd.io" \
+        "dbeaver-ce" "sublime-text" "sublime-merge"
 
     install-pipx
 
@@ -118,6 +126,18 @@ function link-bins {(
         fi
     done
 )}
+
+function configure-extra-repositories {
+    curl -s https://dbeaver.io/debs/dbeaver.gpg.key | sudo apt-key add -
+    echo "deb https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
+
+    curl -s https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
+    echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
+
+    curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
+        | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+}
 
 function apt-install {
     log-title "Installing dependencies using APT"
