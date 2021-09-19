@@ -23,7 +23,7 @@ function main {
         "fwupd" "policykit-1-gnome" \
         "fonts-noto-color-emoji" \
         "i3blocks" "vlc" "gpicview" \
-        "xfce4-terminal" "jq" \
+        "xfce4-terminal" "jq" "qbittorrent" \
         "maim" "blueman" "codium" \
         "xclip" "xz-utils" "keepassxc" \
         "docker-ce" "docker-ce-cli" "containerd.io" \
