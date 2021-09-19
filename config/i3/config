@@ -206,6 +206,8 @@ bar {
 
 # Custom
 
+default_border pixel 1
+
 ## Keybinds. Use `xev` to debug keys
 bindsym $mod+Shift+s sticky toggle
 bindsym $mod+XF86AudioRaiseVolume exec pavucontrol -t 3
