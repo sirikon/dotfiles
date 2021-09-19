@@ -88,6 +88,7 @@ function install-telegram {
             mv t/* .
             rmdir t
             rm telegram.tar.xz
+            mkdir -p ~/bin
             ln -s $(pwd)/Telegram ~/bin/telegram
         )
     fi
