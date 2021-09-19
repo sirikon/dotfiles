@@ -18,13 +18,13 @@ function main {
         "network-manager" "network-manager-gnome" \
         "firefox-esr" "vim" "arandr" \
         "pulseaudio" "pavucontrol" \
-        "nitrogen" "dunst" \
+        "nitrogen" "dunst" "thunar" \
         "python3" "python3-pip" "python3-venv" \
         "fwupd" "policykit-1-gnome" \
         "fonts-noto-color-emoji" \
-        "i3blocks" \
+        "i3blocks" "vlc" "gpicview" \
         "xfce4-terminal" \
-        "maim" "blueman" \
+        "maim" "blueman" "codium" \
         "xclip" "xz-utils" \
         "docker-ce" "docker-ce-cli" "containerd.io" \
         "dbeaver-ce" "sublime-text" "sublime-merge"
@@ -179,6 +179,11 @@ function configure-extra-repositories {
     curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
     echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
         | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+    sudo rm -f /usr/share/keyrings/vscodium-archive-keyring.gpg
+    curl -fsSL https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg | sudo gpg --dearmor -o /usr/share/keyrings/vscodium-archive-keyring.gpg
+    echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/debs vscodium main' \
+        | sudo tee /etc/apt/sources.list.d/vscodium.list
 }
 
 function apt-install {
