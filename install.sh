@@ -99,9 +99,9 @@ function configure-networking {
 
 function configure-wallpaper {
     log-title "Configuring wallpaper"
-    # nitrogen --head=0 --set-zoom-fill "${ROOT}/assets/wallpapers/klaus-workshop.jpg"
-    # nitrogen --head=1 --set-zoom-fill "${ROOT}/assets/wallpapers/klaus-workshop.jpg"
-    nitrogen --set-zoom-fill "${ROOT}/assets/wallpapers/klaus-outside-winter.jpg" 2> /dev/null
+    # nitrogen --save --head=0 --set-zoom-fill "${ROOT}/assets/wallpapers/klaus-workshop.jpg"
+    # nitrogen --save --head=1 --set-zoom-fill "${ROOT}/assets/wallpapers/klaus-workshop.jpg"
+    nitrogen --save --set-zoom-fill "${ROOT}/assets/wallpapers/klaus-outside-winter.jpg" 2> /dev/null
 }
 
 function configure-docker-user {
