@@ -40,6 +40,7 @@ function main {
 
     link-bins
 
+    configure-dropbox-links
     configure-git
     configure-networking
     configure-docker-user
@@ -135,6 +136,14 @@ function configure-networking {
 
     sudo systemctl enable NetworkManager
     sudo systemctl start NetworkManager
+}
+
+function configure-dropbox-links {
+    log-title "Configuring Dropbox links"
+    [ ! -d ~/Dropbox/ProgramData ] && return 0
+
+    link-force ~/Dropbox/ProgramData/DBeaver/General ~/.local/share/DBeaverData/workspace6/General
+    link-force ~/Dropbox/ProgramData/qBittorrent/BT_backup ~/.local/share/data/qBittorrent/BT_backup
 }
 
 function configure-docker-user {
