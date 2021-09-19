@@ -20,7 +20,7 @@ function main {
         "pulseaudio" "pavucontrol" \
         "nitrogen" "dunst" \
         "python3" "python3-pip" "python3-venv" \
-        "fwupd" "slack" \
+        "fwupd" \
         "fonts-noto-color-emoji" \
         "i3blocks" \
         "xfce4-terminal" \
@@ -171,8 +171,6 @@ function configure-extra-repositories {
 
     curl -sL https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
     echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
-
-    curl -s https://packagecloud.io/install/repositories/slacktechnologies/slack/script.deb.sh | sudo bash
 
     sudo rm -f /usr/share/keyrings/docker-archive-keyring.gpg
     curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
