@@ -73,6 +73,8 @@ function link-x {
 }
 
 function configure-networking {
+    log-title "Configuring networking"
+
     sudo systemctl disable systemd-networkd systemd-networkd.socket systemd-networkd-wait-online
     sudo systemctl stop systemd-networkd systemd-networkd.socket systemd-networkd-wait-online
 
@@ -86,9 +88,10 @@ function configure-networking {
 }
 
 function configure-wallpaper {
+    log-title "Configuring wallpaper"
     # nitrogen --head=0 --set-zoom-fill "${ROOT}/assets/wallpapers/klaus-workshop.jpg"
     # nitrogen --head=1 --set-zoom-fill "${ROOT}/assets/wallpapers/klaus-workshop.jpg"
-    nitrogen --set-zoom-fill "${ROOT}/assets/wallpapers/klaus-outside-winter.jpg"
+    nitrogen --set-zoom-fill "${ROOT}/assets/wallpapers/klaus-outside-winter.jpg" 2> /dev/null
 }
 
 function link-force {
