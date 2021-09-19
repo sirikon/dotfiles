@@ -38,6 +38,7 @@ function main {
 
     link-bins
 
+    configure-git
     configure-networking
     configure-wallpaper || echo ""
     configure-docker-user
@@ -86,6 +87,12 @@ function link-sublime-merge {
 function link-x {
     log-title "Linking X config"
     link-force "${ROOT}/config/x/Xresources" ~/.Xresources
+}
+
+function configure-git {
+    git config --global pull.rebase true
+    git config --global user.name "Carlos Fdez. Llamas"
+    git config --global user.email "hello@sirikon.me"
 }
 
 function configure-networking {
