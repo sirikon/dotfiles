@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# Add .local/bin to PATH. pip3 bins are stored there.
-export PATH=$PATH:~/.local/bin
-
 # Add asdf
 . ~/.asdf/asdf.sh
 . ~/.asdf/completions/asdf.bash

@@ -112,6 +112,7 @@ function link-sublime-merge {
 function link-x {
     log-title "Linking X config"
     link-force "${ROOT}/config/x/Xresources" ~/.Xresources
+    link-force "${ROOT}/config/x/xsessionrc" ~/.xsessionrc
 }
 
 function configure-git {
