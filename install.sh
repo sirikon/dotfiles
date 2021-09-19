@@ -25,7 +25,7 @@ function main {
         "i3blocks" "vlc" "gpicview" \
         "xfce4-terminal" \
         "maim" "blueman" "codium" \
-        "xclip" "xz-utils" \
+        "xclip" "xz-utils" "keepassxc" \
         "docker-ce" "docker-ce-cli" "containerd.io" \
         "dbeaver-ce" "sublime-text" "sublime-merge"
 
