@@ -79,7 +79,7 @@ function configure-networking {
     sudo systemctl disable systemd-resolved
     sudo systemctl stop systemd-resolved
 
-    sudo rm /etc/network/interfaces
+    sudo rm -f /etc/network/interfaces
 
     sudo systemctl enable NetworkManager
     sudo systemctl start NetworkManager
