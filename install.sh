@@ -52,6 +52,7 @@ function extend-bashrc {
 }
 
 function install-pipx {
+    log-title "Installing pipx"
     pip3 install pipx
 }
 
