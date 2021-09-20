@@ -204,7 +204,7 @@ bar {
 
 # Custom
 
-default_border pixel 1
+default_border pixel 2
 
 ## Keybinds. Use `xev` to debug keys
 bindsym $mod+Shift+s sticky toggle
