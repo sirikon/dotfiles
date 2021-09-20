@@ -14,12 +14,13 @@ function main {
     configure-extra-repositories
 
     apt-install \
-        "xorg" "i3" "lightdm" \
+        "xorg" "i3" "lightdm" "firmware-amd-graphics" \
+        "firmware-realtek" "firmware-iwlwifi" \
         "network-manager" "network-manager-gnome" \
         "firefox-esr" "vim" "arandr" \
         "pulseaudio" "pavucontrol" \
         "nitrogen" "dunst" "thunar" \
-        "python3" "python3-pip" "python3-venv" \
+        "python3" "python3-pip" "python3-venv" "python3-gpg" \
         "fwupd" "policykit-1-gnome" \
         "fonts-noto-color-emoji" \
         "i3blocks" "vlc" "gpicview" \
