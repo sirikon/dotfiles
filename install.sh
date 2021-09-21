@@ -5,30 +5,7 @@ ROOT="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 cd "$ROOT"
 
 function main {
-    ensure-sudo
-
-    apt-install \
-        "apt-transport-https" "ca-certificates" \
-        "curl" "git" "gnupg" "lsb-release" "debian-archive-keyring"
-
-    configure-extra-repositories
-
-    apt-install \
-        "xorg" "i3" "lightdm" "firmware-amd-graphics" \
-        "firmware-realtek" "firmware-iwlwifi" \
-        "network-manager" "network-manager-gnome" \
-        "firefox-esr" "vim" "arandr" \
-        "pulseaudio" "pavucontrol" \
-        "nitrogen" "dunst" "thunar" \
-        "python3" "python3-pip" "python3-venv" "python3-gpg" \
-        "fwupd" "policykit-1-gnome" \
-        "fonts-noto-color-emoji" \
-        "i3blocks" "vlc" "gpicview" \
-        "xfce4-terminal" "jq" "qbittorrent" \
-        "maim" "blueman" "codium" \
-        "xclip" "xz-utils" "keepassxc" \
-        "docker-ce" "docker-ce-cli" "containerd.io" \
-        "dbeaver-ce" "sublime-text" "sublime-merge"
+    ./install.py
 
     install-pipx
     install-asdf
