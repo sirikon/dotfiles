@@ -15,20 +15,39 @@ def main():
 
     set_apt_repositories(
         # Debian extras
-        APTRepository('deb', 'http://deb.debian.org/debian bullseye contrib non-free'),
-        APTRepository('deb-src', 'http://deb.debian.org/debian bullseye contrib non-free'),
-        APTRepository('deb', 'http://deb.debian.org/debian-security/ bullseye-security contrib non-free'),
-        APTRepository('deb-src', 'http://deb.debian.org/debian-security/ bullseye-security contrib non-free'),
+        APTRepository('deb', 'http://deb.debian.org/debian', ['bullseye', 'contrib', 'non-free']),
+        APTRepository('deb-src', 'http://deb.debian.org/debian', ['bullseye', 'contrib', 'non-free']),
+        APTRepository('deb', 'http://deb.debian.org/debian-security/', ['bullseye-security', 'contrib', 'non-free']),
+        APTRepository('deb-src', 'http://deb.debian.org/debian-security/', ['bullseye-security', 'contrib', 'non-free']),
+
+        APTRepository('deb', 'http://deb.debian.org/debian', ['buster', 'main']),
+        APTRepository('deb-src', 'http://deb.debian.org/debian', ['buster', 'main']),
+
+        APTRepository('deb', 'http://deb.debian.org/debian', ['unstable', 'main']),
+        APTRepository('deb-src', 'http://deb.debian.org/debian', ['unstable', 'main']),
 
         # Others
-        APTRepository('deb', 'https://dbeaver.io/debs/dbeaver-ce /',
+        APTRepository('deb', 'https://dbeaver.io/debs/dbeaver-ce', ['/'],
             key=('dbeaver', 'https://dbeaver.io/debs/dbeaver.gpg.key')),
-        APTRepository('deb', 'https://download.sublimetext.com/ apt/stable/',
+
+        APTRepository('deb', 'https://download.sublimetext.com/', ['apt/stable/'],
             key=('sublimehq', 'https://download.sublimetext.com/sublimehq-pub.gpg')),
-        APTRepository('deb', 'https://download.docker.com/linux/debian ' + get_debian_version_name() + ' stable',
+
+        APTRepository('deb', 'https://download.docker.com/linux/debian', [get_debian_version_name(), 'stable'],
             key=('docker', 'https://download.docker.com/linux/debian/gpg')),
-        APTRepository('deb', 'https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/debs vscodium main',
-            key=('vscodium', 'https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg'))
+
+        APTRepository('deb', 'https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/debs', ['vscodium', 'main'],
+            key=('vscodium', 'https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg')),
+
+        APTRepository('deb', 'http://repository.spotify.com', ['stable', 'non-free'],
+            key=('spotify', 'https://download.spotify.com/debian/pubkey_0D811D58.gpg'))
+    )
+
+    set_apt_pins(
+        APTPin(package='*', release='o=Debian,n=buster', priority=1),
+        APTPin(package='*', release='o=Debian,a=unstable', priority=1),
+        APTPin(package='libnss3', release='o=Debian,a=unstable', priority=600),
+        APTPin(package='*', release='o=packagecloud.io/slacktechnologies/slack', priority=1)
     )
 
     refresh_apt_packages()
@@ -39,8 +58,8 @@ def main():
         *get_apt_packages_for_devices(),
         "xorg", "i3", "lightdm",
         "network-manager", "network-manager-gnome",
-        "firefox-esr", "vim", "arandr",
-        "pulseaudio", "pavucontrol",
+        "firefox", "chromium", "vim", "arandr",
+        "pulseaudio", "pavucontrol", "spotify-client",
         "nitrogen", "dunst", "thunar",
         "python3", "python3-pip", "python3-venv", "python3-gpg",
         "fwupd", "policykit-1-gnome",
@@ -111,14 +130,17 @@ def get_installed_apt_packages():
 class APTRepository():
     kind: str
     url: str
+    areas: List[str]
     arch: Optional[str] = None
     key: Optional[Tuple[str, str]] = None
 
 def set_apt_repositories(*apt_repositories: List[APTRepository]):
     log_title('Setting APT repositories')
     apt_list_path = '/etc/apt/sources.list.d/sirikon.list'
+
     run(['sudo', 'bash', '-c', f'rm -f "{apt_list_path}"'])
     run(['sudo', 'touch', apt_list_path])
+
     for apt_repository in apt_repositories:
 
         keyring_file_path = '/usr/share/keyrings/' + apt_repository.key[0] + '-archive-keyring.gpg' \
@@ -138,9 +160,31 @@ def set_apt_repositories(*apt_repositories: List[APTRepository]):
         if keyring_file_path is not None: params.append('signed-by=' + keyring_file_path)
         params_chunk = ' [' + ' '.join(params) + '] ' if len(params) > 0 else ' '
 
-        line = f'{kind}{params_chunk}{url}'
+        areas_chunk = ' '.join(apt_repository.areas)
+        line = f'{kind}{params_chunk}{url} {areas_chunk}'
         log_subtitle(line)
         run(['sudo', 'bash', '-c', f'echo "{line}" >> "{apt_list_path}"'])
+
+@dataclass
+class APTPin():
+    package: str
+    release: str
+    priority: int
+
+def set_apt_pins(*pins: List[APTPin]):
+    apt_preferences_path = '/etc/apt/preferences.d/99sirikon'
+    run(['sudo', 'bash', '-c', f'rm -f "{apt_preferences_path}"'])
+    run(['sudo', 'touch', apt_preferences_path])
+
+    for pin in pins:
+        section = '\n'.join([
+            'Package: ' + pin.package,
+            'Pin: release ' + pin.release,
+            'Pin-Priority: ' + str(pin.priority),
+            ''
+        ])
+        run(['sudo', 'bash', '-c', f'echo "{section}" >> "{apt_preferences_path}"'])
+
 
 def get_debian_version_name():
     return run(['lsb_release', '-cs'], stdout=PIPE, text=True).stdout.strip()
