@@ -54,7 +54,8 @@ function patch-vscodium-marketplace {
 }
 
 function upgrade-minecraft-launcher {(
-	cd ~/Documents
+	mkdir -p ~/Downloads/MinecraftLauncher
+	cd ~/Downloads/MinecraftLauncher
 	rm -f Minecraft.deb
 	wget "https://launcher.mojang.com/download/Minecraft.deb"
 	sudo apt install ./Minecraft.deb
