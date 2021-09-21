@@ -81,8 +81,12 @@ def get_apt_packages_for_devices():
         if 'Intel' in pci and 'Wireless' in pci:
             result.add('firmware-iwlwifi')
 
-    log_subtitle(', '.join(list(result)))
-    return list(result)
+    result_list = list(result)
+    result_list.sort()
+
+    for item in result_list:
+        log_subtitle(item)
+    return result_list
 
 def refresh_apt_packages():
     log_title('Refreshing APT packages')
