@@ -50,7 +50,8 @@ def main():
         "maim", "blueman", "codium",
         "xclip", "xz-utils", "keepassxc",
         "docker-ce", "docker-ce-cli", "containerd.io",
-        "dbeaver-ce", "sublime-text", "sublime-merge"
+        "dbeaver-ce", "sublime-text", "sublime-merge",
+        "zenity"
     )
 
 def ensure_sudo():
@@ -102,8 +103,9 @@ def ensure_apt_packages(*packages):
     run(['sudo', 'apt-get', 'install', '-y', *packages_to_install])
 
 def get_installed_apt_packages():
-    result = run(['apt-cache', 'pkgnames'], stdout=PIPE, text=True)
-    return result.stdout.strip().split('\n')
+    lines = run(['bash', '-c', 'dpkg --get-selections | grep -v deinstall'], stdout=PIPE, text=True)\
+        .stdout.strip().split('\n')
+    return [line.split('\t')[0] for line in lines]
 
 @dataclass
 class APTRepository():
