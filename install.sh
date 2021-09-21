@@ -75,7 +75,7 @@ function install-telegram {
 
 function install-docker-compose {
     log-title "Installing docker-compose"
-    command -v docker-compose || pipx install docker-compose
+    command -v docker-compose || ~/.local/bin/pipx install docker-compose
 }
 
 function link-i3 {

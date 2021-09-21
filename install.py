@@ -33,9 +33,11 @@ def main():
 
     refresh_apt_packages()
 
+    update_pciids()
+
     ensure_apt_packages(
-        "xorg", "i3", "lightdm", "firmware-amd-graphics",
-        "firmware-realtek", "firmware-iwlwifi",
+        *get_apt_packages_for_devices(),
+        "xorg", "i3", "lightdm",
         "network-manager", "network-manager-gnome",
         "firefox-esr", "vim", "arandr",
         "pulseaudio", "pavucontrol",
@@ -55,6 +57,32 @@ def ensure_sudo():
     log_title('Ensuring SUDO')
     run(['sudo', 'printf', '%s', ''])
     log_subtitle('SUDO obtained')
+
+def update_pciids():
+    log_title('Update PCI Id database')
+    run(['sudo', 'update-pciids'])
+
+def get_apt_packages_for_devices():
+    log_title('Selecting apt packages for devices')
+    pci_list = run(['lspci'], stdout=PIPE, text=True).stdout.strip().splitlines()
+    result = {
+        'firmware-linux',
+        'firmware-linux-free',
+        'firmware-linux-nonfree',
+        'firmware-misc-nonfree'
+    }
+
+    for pci in pci_list:
+        if 'VGA' in pci:
+            if 'AMD' in pci:
+                result.add('firmware-amd-graphics')
+        if 'Realtek' in pci:
+            result.add('firmware-realtek')
+        if 'Intel' in pci and 'Wireless' in pci:
+            result.add('firmware-iwlwifi')
+
+    log_subtitle(', '.join(list(result)))
+    return list(result)
 
 def refresh_apt_packages():
     log_title('Refreshing APT packages')
