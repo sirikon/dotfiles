@@ -73,6 +73,8 @@ def main():
         "zenity", "xss-lock"
     )
 
+    configure_xorg_graphics_card()
+
 def ensure_sudo():
     log_title('Ensuring SUDO')
     run(['sudo', 'printf', '%s', ''])
@@ -107,6 +109,44 @@ def get_apt_packages_for_devices():
     for item in result_list:
         log_subtitle(item)
     return result_list
+
+def configure_xorg_graphics_card():
+    log_title('Configuring xorg graphics card')
+    brand = get_graphics_card_brand()
+    log_subtitle('Brand: ' + brand)
+
+    content = ''
+    filename = ''
+
+    if brand == 'amd':
+        content = '\n'.join([
+            'Section "Device"',
+            '     Identifier "AMD"',
+            '     Driver "amdgpu"',
+            '     Option "TearFree" "true"',
+            'EndSection',
+            ''
+        ])
+        filename = '20-amdgpu.conf'
+    elif brand == 'intel':
+        content = '\n'.join([
+            'Section "Device"',
+            '     Identifier "Intel Graphics"',
+            '     Driver "intel"',
+            '     Option "TearFree" "true"',
+            'EndSection',
+            ''
+        ])
+        filename = '20-intel.conf'
+
+    run(['sudo', 'rm', '-f', '/etc/X11/xorg.conf.d/' + filename])
+    run(['sudo', 'bash', '-c', f'echo \'{content}\' >> "/etc/X11/xorg.conf.d/{filename}"'])
+
+def get_graphics_card_brand():
+    pci_list = run(['lspci'], stdout=PIPE, text=True).stdout.strip().splitlines()
+    for pci in pci_list:
+        if 'VGA' in pci and 'AMD' in pci: return 'amd'
+        if 'VGA' in pci and 'Intel' in pci: return 'intel'
 
 def refresh_apt_packages():
     log_title('Refreshing APT packages')
