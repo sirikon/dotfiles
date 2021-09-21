@@ -51,7 +51,7 @@ def main():
         "xclip", "xz-utils", "keepassxc",
         "docker-ce", "docker-ce-cli", "containerd.io",
         "dbeaver-ce", "sublime-text", "sublime-merge",
-        "zenity"
+        "zenity", "xss-lock"
     )
 
 def ensure_sudo():
