@@ -40,14 +40,18 @@ def main():
             key=('vscodium', 'https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg')),
 
         APTRepository('deb', 'http://repository.spotify.com', ['stable', 'non-free'],
-            key=('spotify', 'https://download.spotify.com/debian/pubkey_0D811D58.gpg'))
+            key=('spotify', 'https://download.spotify.com/debian/pubkey_0D811D58.gpg')),
+
+        APTRepository('deb', 'https://download.konghq.com/insomnia-ubuntu/', ['default', 'all'],
+            trusted=True, arch='amd64')
     )
 
     set_apt_pins(
         APTPin(package='*', release='o=Debian,n=buster', priority=1),
         APTPin(package='*', release='o=Debian,a=unstable', priority=1),
         APTPin(package='libnss3', release='o=Debian,a=unstable', priority=600),
-        APTPin(package='*', release='o=packagecloud.io/slacktechnologies/slack', priority=1)
+        APTPin(package='*', release='o=packagecloud.io/slacktechnologies/slack', priority=1),
+        APTPin(package='*', release='l=insomnia-ubuntu', priority=1)
     )
 
     refresh_apt_packages()
@@ -66,7 +70,7 @@ def main():
         "fonts-noto-color-emoji",
         "i3blocks", "vlc", "gpicview",
         "xfce4-terminal", "jq", "qbittorrent",
-        "maim", "blueman", "codium",
+        "maim", "blueman", "codium", "insomnia",
         "xclip", "xz-utils", "keepassxc",
         "docker-ce", "docker-ce-cli", "containerd.io",
         "dbeaver-ce", "sublime-text", "sublime-merge",
@@ -173,6 +177,7 @@ class APTRepository():
     areas: List[str]
     arch: Optional[str] = None
     key: Optional[Tuple[str, str]] = None
+    trusted: bool = False
 
 def set_apt_repositories(*apt_repositories: List[APTRepository]):
     log_title('Setting APT repositories')
@@ -197,6 +202,7 @@ def set_apt_repositories(*apt_repositories: List[APTRepository]):
         url = apt_repository.url
         params = []
         if apt_repository.arch is not None: params.append('arch=' + apt_repository.arch)
+        if apt_repository.trusted: params.append('trusted=yes')
         if keyring_file_path is not None: params.append('signed-by=' + keyring_file_path)
         params_chunk = ' [' + ' '.join(params) + '] ' if len(params) > 0 else ' '
 
