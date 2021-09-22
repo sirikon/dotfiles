@@ -23,6 +23,10 @@ function prompt-tiny {
 	export PS1
 }
 
+function ll {
+	ls -lah "${@}"
+}
+
 function docker-destroy {
 	docker ps -aq | while IFS=$'\n' read -r containerId; do
 		docker rm -f "$containerId"
