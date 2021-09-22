@@ -5,7 +5,10 @@ ROOT="$(realpath "$(dirname "${BASH_SOURCE[0]}")")"
 cd "$ROOT"
 
 function main {
-    ./install.py
+    (
+        export PYTHONPATH="${PYTHONPATH:-""}:$ROOT"
+        sudo -E python3 -m installer
+    )
 
     install-pipx
     install-asdf
@@ -16,7 +19,6 @@ function main {
     link-xfce4-terminal
     link-sublime-merge
     link-x
-
     link-bins
 
     configure-dropbox-links
@@ -25,12 +27,6 @@ function main {
     configure-docker-user
 
     extend-bashrc
-}
-
-function ensure-sudo {
-    log-title "Ensuring SUDO access"
-    sudo printf "%s" ""
-    log "SUDO obtained"
 }
 
 function extend-bashrc {
@@ -44,38 +40,42 @@ function extend-bashrc {
 }
 
 function install-pipx {
+    command -v pipx >/dev/null && return
+    
     log-title "Installing pipx"
     pip3 install pipx
 }
 
 function install-asdf {
+    [ -d ~/.asdf ] && return
+    
     log-title "Installing asdf vm"
-    if [ ! -d ~/.asdf ]; then
-        git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1
-    fi
+    git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1
 }
 
 function install-telegram {
+    [ -d ~/Software/Telegram ] && return
+
     log-title "Installing telegram"
-    if [ ! -d ~/Software/Telegram ]; then
-        (
-            mkdir -p ~/Software/Telegram
-            cd ~/Software/Telegram
-            wget -O telegram.tar.xz https://telegram.org/dl/desktop/linux
-            tar -xf telegram.tar.xz
-            mv Telegram t
-            mv t/* .
-            rmdir t
-            rm telegram.tar.xz
-            mkdir -p ~/bin
-            ln -s "$(pwd)/Telegram" ~/bin/telegram
-        )
-    fi
+    (
+        mkdir -p ~/Software/Telegram
+        cd ~/Software/Telegram
+        wget -O telegram.tar.xz https://telegram.org/dl/desktop/linux
+        tar -xf telegram.tar.xz
+        mv Telegram t
+        mv t/* .
+        rmdir t
+        rm telegram.tar.xz
+        mkdir -p ~/bin
+        ln -s "$(pwd)/Telegram" ~/bin/telegram
+    )
 }
 
 function install-docker-compose {
+    command -v docker-compose >/dev/null && return
+
     log-title "Installing docker-compose"
-    command -v docker-compose || ~/.local/bin/pipx install docker-compose
+    ~/.local/bin/pipx install docker-compose
 }
 
 function link-i3 {
@@ -160,31 +160,6 @@ function link-bins {(
         fi
     done
 )}
-
-function configure-extra-repositories {
-    log-title "Configuring extra repositories"
-
-    curl -sL https://dbeaver.io/debs/dbeaver.gpg.key | sudo apt-key add -
-    echo "deb https://dbeaver.io/debs/dbeaver-ce /" | sudo tee /etc/apt/sources.list.d/dbeaver.list
-
-    curl -sL https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
-    echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
-
-    sudo rm -f /usr/share/keyrings/docker-archive-keyring.gpg
-    curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
-        | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-    sudo rm -f /usr/share/keyrings/vscodium-archive-keyring.gpg
-    curl -fsSL https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg | sudo gpg --dearmor -o /usr/share/keyrings/vscodium-archive-keyring.gpg
-    echo 'deb [ signed-by=/usr/share/keyrings/vscodium-archive-keyring.gpg ] https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/debs vscodium main' \
-        | sudo tee /etc/apt/sources.list.d/vscodium.list
-}
-
-function apt-install {
-    log-title "Installing dependencies using APT"
-    sudo apt update && sudo apt install -y "${@}"
-}
 
 function bashrc-fragment {
     cat << EOF
