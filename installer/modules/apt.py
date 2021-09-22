@@ -27,7 +27,7 @@ def set_repositories(*apt_repositories: List[Repository]):
     for apt_repository in apt_repositories:
         ensure_keyring(apt_repository)
         repo_line = build_repo_line(apt_repository)
-        apt_list.writelines([repo_line])
+        apt_list.write(repo_line + '\n')
 
     apt_list.close()
     apt_already_refreshed = False

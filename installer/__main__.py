@@ -36,6 +36,9 @@ def main():
         apt.Repository('deb', 'http://repository.spotify.com', ['stable', 'non-free'],
             key=('spotify', 'https://download.spotify.com/debian/pubkey_0D811D58.gpg')),
 
+        apt.Repository('deb', 'https://download.virtualbox.org/virtualbox/debian', [get_debian_version_name(), 'contrib'],
+            key=('virtualbox', 'https://www.virtualbox.org/download/oracle_vbox_2016.asc'), arch='amd64'),
+
         apt.Repository('deb', 'https://download.konghq.com/insomnia-ubuntu/', ['default', 'all'],
             trusted=True, arch='amd64')
     )
@@ -57,14 +60,14 @@ def main():
         "nitrogen", "dunst", "thunar",
         "python3", "python3-pip", "python3-venv", "python3-gpg",
         "fwupd", "policykit-1-gnome",
-        "fonts-noto-color-emoji",
+        "fonts-noto-color-emoji", "linux-headers-amd64",
         "i3blocks", "vlc", "gpicview",
         "xfce4-terminal", "jq", "qbittorrent",
         "maim", "blueman", "codium", "insomnia",
         "xclip", "xz-utils", "keepassxc",
         "docker-ce", "docker-ce-cli", "containerd.io",
         "dbeaver-ce", "sublime-text", "sublime-merge",
-        "zenity", "xss-lock"
+        "zenity", "xss-lock", "virtualbox-6.1"
     )
 
     devices.configure_xorg_graphics_card()
