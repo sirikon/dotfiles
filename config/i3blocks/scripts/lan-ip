@@ -27,16 +27,6 @@ def get_default_network_devices():
 
     return network_devices
 
-
-# def get_current_network_cards():
-#     routes = cmd('ip', 'route')
-#     default_routes = filter_lines_starting_with('default', routes)
-
-#     return [route.split(' ')[4] for route in default_routes]
-
-def filter_lines_starting_with(prefix, lines):
-    return list(filter(lambda line: line.startswith(prefix), lines))
-
 def cmd(*args):
     return [line.strip() for line in run(args, stdout=PIPE, text=True).stdout.splitlines()]
 
