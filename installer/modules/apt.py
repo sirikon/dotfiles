@@ -76,6 +76,7 @@ def set_pins(*pins: List[Pin]):
         ]))
 
     apt_preferences.close()
+    global apt_already_refreshed
     apt_already_refreshed = False
 
 
