@@ -5,23 +5,34 @@ def main():
     print('🖥️ ', end='')
 
     parts = []
-    for card in get_current_network_cards():
-        ip = get_network_card_ip(card)
-        parts.append(f'<span color="gray">{card}:</span>{ip}')
+    for device in get_default_network_devices():
+        ip = get_network_device_ip(device)
+        parts.append(f'<span color="gray">{device}:</span>{ip}')
 
     print(' '.join(parts))
 
-def get_network_card_ip(card):
-    lines = cmd('ip', 'addr', 'show', card)
-    inet_line = filter_lines_starting_with('inet ', lines)[0]
-
+def get_network_device_ip(device):
+    inet_line = [l for l in cmd('ip', 'addr', 'show', device) if l.startswith('inet ') and 'secondary' not in l][0]
     return inet_line.split(' ')[1].split('/')[0]
 
-def get_current_network_cards():
-    routes = cmd('ip', 'route')
-    default_routes = filter_lines_starting_with('default', routes)
+def get_default_network_devices():
+    routes = [l.split(' ') for l in cmd('ip', 'route') if l.startswith('default')]
 
-    return [route.split(' ')[4] for route in default_routes]
+    network_devices = []
+    for route in routes:
+        if 'linkdown' in route: continue
+        if 'metric' not in route: continue
+        network_device_pos = route.index('dev')+1
+        network_devices.append(route[network_device_pos])
+
+    return network_devices
+
+
+# def get_current_network_cards():
+#     routes = cmd('ip', 'route')
+#     default_routes = filter_lines_starting_with('default', routes)
+
+#     return [route.split(' ')[4] for route in default_routes]
 
 def filter_lines_starting_with(prefix, lines):
     return list(filter(lambda line: line.startswith(prefix), lines))
