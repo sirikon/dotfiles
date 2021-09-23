@@ -7,8 +7,8 @@ function main {
     case $BLOCK_BUTTON in
         1) pavucontrol &>/dev/null & ;;
         2) pactl set-sink-mute @DEFAULT_SINK@ toggle &>/dev/null ;;
-        4) pactl set-sink-volume @DEFAULT_SINK@ +10% &>/dev/null ;;
-        5) pactl set-sink-volume @DEFAULT_SINK@ -10% &>/dev/null ;;
+        4) pactl set-sink-volume @DEFAULT_SINK@ +1% &>/dev/null ;;
+        5) pactl set-sink-volume @DEFAULT_SINK@ -1% &>/dev/null ;;
     esac
 
     printf "%s" "🎵"
