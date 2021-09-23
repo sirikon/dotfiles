@@ -20,6 +20,8 @@ def get_required_apt_packages():
             result.add('firmware-amd-graphics')
         if 'Realtek' in pci:
             result.add('firmware-realtek')
+        if 'Atheros' in pci:
+            result.add('firmware-atheros')
         if 'Intel' in pci and 'Wireless' in pci:
             result.add('firmware-iwlwifi')
 
