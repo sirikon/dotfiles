@@ -16,6 +16,7 @@ function main {
     install-docker-compose
 
     link-i3
+    link-vscodium
     link-xfce4-terminal
     link-sublime-merge
     link-x
@@ -83,6 +84,11 @@ function link-i3 {
     link-force "${ROOT}/config/i3" ~/.config/i3
     link-force "${ROOT}/config/i3status" ~/.config/i3status
     link-force "${ROOT}/config/i3blocks" ~/.config/i3blocks
+}
+
+function link-vscodium {
+    log-title "Linking VSCodium settings"
+    link-force "${ROOT}/config/vscode/settings.json" ~/.config/VSCodium/User/settings.json
 }
 
 function link-xfce4-terminal {
