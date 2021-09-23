@@ -46,7 +46,7 @@ def main():
     apt.set_pins(
         apt.Pin(package='*', release='o=Debian,n=buster', priority=1),
         apt.Pin(package='*', release='o=Debian,a=unstable', priority=1),
-        apt.Pin(package='libnss3', release='o=Debian,a=unstable', priority=600),
+        apt.Pin(package='libnss3', release='o=Debian,a=unstable', priority=500),
         apt.Pin(package='*', release='o=packagecloud.io/slacktechnologies/slack', priority=1),
         apt.Pin(package='*', release='l=insomnia-ubuntu', priority=1)
     )

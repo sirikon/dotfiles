@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Add sbin to PATH
+export PATH=/usr/local/sbin:/usr/sbin:/sbin:$PATH
+
 # Add asdf
 . ~/.asdf/asdf.sh
 . ~/.asdf/completions/asdf.bash

@@ -68,12 +68,14 @@ def set_pins(*pins: List[Pin]):
     apt_preferences = open('/etc/apt/preferences.d/99sirikon', 'w')
 
     for pin in pins:
-        apt_preferences.writelines([
+        apt_preferences.write('\n'.join([
             'Package: ' + pin.package,
             'Pin: release ' + pin.release,
             'Pin-Priority: ' + str(pin.priority),
-            ''
-        ])
+            '\n'
+        ]))
+
+    apt_preferences.close()
     apt_already_refreshed = False
 
 
