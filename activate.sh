@@ -68,6 +68,14 @@ function upgrade-minecraft-launcher {(
 	sudo apt install ./Minecraft.deb
 )}
 
+function upgrade-discord {(
+	mkdir -p ~/Downloads/Discord
+	cd ~/Downloads/Discord
+	rm -f discord.deb
+	wget -O discord.deb "https://discord.com/api/download?platform=linux&format=deb"
+	sudo apt install ./discord.deb
+)}
+
 function my-commits-here {
 	smerge search 'author:"Carlos Fdez. Llamas <hello@sirikon.me>"' .
 }
