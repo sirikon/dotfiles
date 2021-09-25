@@ -7,6 +7,8 @@ export PATH=/usr/local/sbin:/usr/sbin:/sbin:$PATH
 . ~/.asdf/asdf.sh
 . ~/.asdf/completions/asdf.bash
 
+alias ll="ls -lahF"
+
 function git_branch {
 	branch=$(git branch 2>/dev/null | grep '^\*' | colrm 1 2)
 	if [ "$branch" == "" ]; then
@@ -24,10 +26,6 @@ function prompt-normal {
 function prompt-tiny {
 	PS1="\[\033[38;5;214m\]\\$\[$(tput sgr0)\] "
 	export PS1
-}
-
-function ll {
-	ls -lah "${@}"
 }
 
 function docker-destroy {
