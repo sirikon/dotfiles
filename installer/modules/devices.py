@@ -64,7 +64,7 @@ def configure_xorg_graphics_card():
         ]
         
     with open(f'/etc/X11/xorg.conf.d/{filename}', 'w') as f:
-        f.writelines(content)
+        f.write('\n'.join(content))
 
 
 def get_graphics_card_brand():
