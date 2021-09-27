@@ -44,7 +44,6 @@ def main():
     )
 
     apt.set_pins(
-        apt.Pin(package='*', release='o=Debian,n=bullseye', priority=1001),
         apt.Pin(package='*', release='o=Debian,n=buster', priority=1),
         apt.Pin(package='*', release='o=Debian,a=unstable', priority=1),
         apt.Pin(package='libnss3', release='o=Debian,a=unstable', priority=500),
