@@ -74,6 +74,16 @@ function upgrade-discord {(
 	sudo apt install ./discord.deb
 )}
 
+function upgrade-flipper {(
+	mkdir -p ~/Software/Flipper
+	cd ~/Software/Flipper
+	rm -rf *
+	curl -L --output __flipper.zip "https://www.facebook.com/fbflipper/public/linux"
+	unzip __flipper.zip
+	rm __flipper.zip
+	ln -s "$(pwd)/flipper" ~/bin/flipper
+)}
+
 function my-commits-here {
 	smerge search 'author:"Carlos Fdez. Llamas <hello@sirikon.me>"' .
 }

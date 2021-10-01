@@ -67,7 +67,8 @@ def main():
         "xclip", "xz-utils", "keepassxc",
         "docker-ce", "docker-ce-cli", "containerd.io",
         "dbeaver-ce", "sublime-text", "sublime-merge",
-        "zenity", "xss-lock", "virtualbox-6.1"
+        "zenity", "xss-lock", "virtualbox-6.1",
+        "zip", "unzip"
     )
 
     devices.configure_xorg_graphics_card()
