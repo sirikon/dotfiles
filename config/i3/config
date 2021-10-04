@@ -211,10 +211,12 @@ bindsym $mod+Shift+s sticky toggle
 bindsym $mod+XF86AudioRaiseVolume exec pavucontrol -t 3
 bindcode Ctrl+Mod1+87 exec --no-startup-id srk-open jira-task
 bindcode Ctrl+Mod1+88 exec --no-startup-id srk-write stripe-card
+bindsym $mod+c exec xcalc
 
 ## Window configs
 for_window [title="Volume Control"] floating enable
 for_window [title="Network Connections"] floating enable
+for_window [title="Calculator"] floating enable
 
 ## Screenshots
 ### Save to file
