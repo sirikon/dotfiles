@@ -61,7 +61,7 @@ def main():
         "python3", "python3-pip", "python3-venv", "python3-gpg",
         "fwupd", "policykit-1-gnome",
         "fonts-noto-color-emoji", "linux-headers-amd64",
-        "i3blocks", "vlc", "gpicview",
+        "i3blocks", "vlc", "gpicview", "libnotify-bin",
         "xfce4-terminal", "jq", "qbittorrent",
         "maim", "blueman", "codium", "insomnia",
         "xclip", "xz-utils", "keepassxc",

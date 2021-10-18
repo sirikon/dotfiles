@@ -31,7 +31,7 @@ def provideStripeCard():
         height=350,
         columns=["Number", "Setup", "3DS", "Pay"],
         data=data)
-    
+
     if result == 'More cards':
         run(["xdg-open", "https://stripe.com/docs/testing#cards"])
         exit(0)
