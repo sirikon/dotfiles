@@ -5,6 +5,7 @@ from utils import zenity
 
 EMULATOR_BIN = os.path.expanduser("~") + "/Android/Sdk/emulator/emulator"
 
+
 def main():
     avds = get_avds()
     result = zenity.list(
@@ -15,13 +16,16 @@ def main():
         width=200,
         height=250,
         data=avds)
-    
-    if (result == ""): return
-    
+
+    if (result == ""):
+        return
+
     run([EMULATOR_BIN, "-avd", result])
+
 
 def get_avds():
     result = run([EMULATOR_BIN, "-list-avds"], stdout=PIPE, text=True)
     return result.stdout.splitlines()
+
 
 main()

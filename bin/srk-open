@@ -3,13 +3,16 @@ import sys
 from os import environ
 from subprocess import run, PIPE
 
+
 def maven_artifact(input):
     artifact_name = input.replace(":", "/")
     return f"https://mvnrepository.com/artifact/{artifact_name}"
 
+
 def jira_task(input):
     jira_workspace = environ.get("JIRA_WORKSPACE")
     return f"https://{jira_workspace}.atlassian.net/browse/{input}"
+
 
 url_builders = {
     "maven-artifact": maven_artifact,

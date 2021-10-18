@@ -51,30 +51,30 @@ function sm {
 
 function patch-vscodium-marketplace {
 	productJson="/usr/share/codium/resources/app/product.json"
-	cat "${productJson}" \
-		| jq '.extensionsGallery.serviceUrl = "https://marketplace.visualstudio.com/_apis/public/gallery"' \
-		| jq '.extensionsGallery.itemUrl = "https://marketplace.visualstudio.com/items"' \
-		| jq -M \
-		| sudo tee "${productJson}" > /dev/null
+	cat "${productJson}" |
+		jq '.extensionsGallery.serviceUrl = "https://marketplace.visualstudio.com/_apis/public/gallery"' |
+		jq '.extensionsGallery.itemUrl = "https://marketplace.visualstudio.com/items"' |
+		jq -M |
+		sudo tee "${productJson}" >/dev/null
 }
 
-function upgrade-minecraft-launcher {(
+function upgrade-minecraft-launcher { (
 	mkdir -p ~/Downloads/MinecraftLauncher
 	cd ~/Downloads/MinecraftLauncher
 	rm -f Minecraft.deb
 	wget "https://launcher.mojang.com/download/Minecraft.deb"
 	sudo apt install ./Minecraft.deb
-)}
+); }
 
-function upgrade-discord {(
+function upgrade-discord { (
 	mkdir -p ~/Downloads/Discord
 	cd ~/Downloads/Discord
 	rm -f discord.deb
 	wget -O discord.deb "https://discord.com/api/download?platform=linux&format=deb"
 	sudo apt install ./discord.deb
-)}
+); }
 
-function upgrade-flipper {(
+function upgrade-flipper { (
 	mkdir -p ~/Software/Flipper
 	cd ~/Software/Flipper
 	rm -rf *
@@ -82,7 +82,7 @@ function upgrade-flipper {(
 	unzip __flipper.zip
 	rm __flipper.zip
 	ln -s "$(pwd)/flipper" ~/bin/flipper
-)}
+); }
 
 function my-commits-here {
 	smerge search 'author:"Carlos Fdez. Llamas <hello@sirikon.me>"' .

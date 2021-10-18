@@ -1,5 +1,12 @@
 {
-    "files.exclude": {
-        "**/__pycache__": true
-    }
+	"editor.detectIndentation": false,
+	"editor.insertSpaces": false,
+	"editor.tabSize": 2,
+	"[python]": {
+		"editor.insertSpaces": true,
+		"editor.tabSize": 4
+	},
+	"files.exclude": {
+		"**/__pycache__": true
+	}
 }

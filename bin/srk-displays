@@ -3,7 +3,8 @@ from os import path, listdir
 from subprocess import run
 from utils import zenity
 
-profiles = [f.replace('.sh', '') for f in listdir(path.join(path.expanduser('~'), '.screenlayout'))]
+profiles = [f.replace('.sh', '') for f in listdir(
+    path.join(path.expanduser('~'), '.screenlayout'))]
 profiles.sort()
 
 profile = zenity.list(
