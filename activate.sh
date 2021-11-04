@@ -84,6 +84,17 @@ function upgrade-flipper { (
 	ln -s "$(pwd)/flipper" ~/bin/flipper
 ); }
 
+function upgrade-appium { (
+	mkdir -p ~/Software/Appium
+	cd ~/Software/Appium
+	rm -rf *
+	latest_version=$(curl --silent "https://api.github.com/repos/appium/appium-desktop/releases/latest" | jq -r ".name")
+	printf "%s\n\n" "Downloading Appium ${latest_version}"
+	wget "https://github.com/appium/appium-desktop/releases/download/v${latest_version}/Appium-Server-GUI-linux-${latest_version}.AppImage"
+	chmod +x "Appium-Server-GUI-linux-${latest_version}.AppImage"
+	ln -s "$(pwd)/Appium-Server-GUI-linux-${latest_version}.AppImage" ~/bin/appium
+); }
+
 function my-commits-here {
 	smerge search 'author:"Carlos Fdez. Llamas <hello@sirikon.me>"' .
 }
