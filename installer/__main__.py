@@ -68,7 +68,7 @@ def main():
         "docker-ce", "docker-ce-cli", "containerd.io",
         "dbeaver-ce", "sublime-text", "sublime-merge",
         "zenity", "xss-lock", "virtualbox-6.1",
-        "zip", "unzip"
+        "zip", "unzip", "cups", "system-config-printer"
     )
 
     devices.configure_xorg_graphics_card()
