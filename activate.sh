@@ -7,6 +7,9 @@ export PATH=/usr/local/sbin:/usr/sbin:/sbin:$PATH
 . ~/.asdf/asdf.sh
 . ~/.asdf/completions/asdf.bash
 
+# Prevent virtualenv automatic prompt
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
 alias ll="ls -lahF"
 
 function git_branch {
@@ -18,8 +21,16 @@ function git_branch {
 	fi
 }
 
+function python_venv {
+	if [ "$VIRTUAL_ENV" == "" ]; then
+		echo ""
+	else
+		echo "[🐍$(basename ${VIRTUAL_ENV})] "
+	fi
+}
+
 function prompt-normal {
-	PS1="\[\033[38;5;208m\]\u\[$(tput sgr0)\]\[\033[38;5;15m\] \[\033[38;5;248m\]\w \$(git_branch)\[$(tput sgr0)\]\[\033[38;5;214m\]\\$\[$(tput sgr0)\] "
+	PS1="\[\033[38;5;208m\]\u\[$(tput sgr0)\]\[\033[38;5;15m\] \[\033[38;5;248m\]\w \$(git_branch)\$(python_venv)\[$(tput sgr0)\]\[\033[38;5;214m\]\\$\[$(tput sgr0)\] "
 	export PS1
 }
 
