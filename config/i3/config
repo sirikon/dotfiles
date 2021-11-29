@@ -215,7 +215,7 @@ bindsym $mod+Shift+s sticky toggle
 bindsym $mod+XF86AudioRaiseVolume exec pavucontrol -t 3
 bindcode Ctrl+Mod1+87 exec --no-startup-id srk-open jira-task
 bindcode Ctrl+Mod1+88 exec --no-startup-id srk-write stripe-card
-bindsym XF86Calculator exec xcalc
+bindsym XF86Calculator exec gnome-calculator
 
 ## Window configs
 for_window [title="Volume Control"] floating enable
