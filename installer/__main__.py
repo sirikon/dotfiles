@@ -46,7 +46,10 @@ def main():
     apt.set_pins(
         apt.Pin(package='*', release='o=Debian,n=buster', priority=1),
         apt.Pin(package='*', release='o=Debian,a=unstable', priority=1),
+        apt.Pin(package='libnspr4', release='o=Debian,a=unstable', priority=500),
+        apt.Pin(package='libnspr4-dev', release='o=Debian,a=unstable', priority=500),
         apt.Pin(package='libnss3', release='o=Debian,a=unstable', priority=500),
+        apt.Pin(package='libnss3-dev', release='o=Debian,a=unstable', priority=500),
         apt.Pin(package='*', release='o=packagecloud.io/slacktechnologies/slack', priority=1),
         apt.Pin(package='*', release='l=insomnia-ubuntu', priority=1)
     )
@@ -68,7 +71,8 @@ def main():
         "docker-ce", "docker-ce-cli", "containerd.io",
         "dbeaver-ce", "sublime-text", "sublime-merge",
         "zenity", "xss-lock", "virtualbox-6.1",
-        "zip", "unzip", "cups", "system-config-printer"
+        "zip", "unzip", "cups", "system-config-printer",
+        "gnome-system-monitor"
     )
 
     devices.configure_xorg_graphics_card()
