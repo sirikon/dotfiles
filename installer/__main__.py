@@ -34,7 +34,7 @@ def main():
             key=('vscodium', 'https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg')),
 
         apt.Repository('deb', 'http://repository.spotify.com', ['stable', 'non-free'],
-            key=('spotify', 'https://download.spotify.com/debian/pubkey_0D811D58.gpg')),
+            key=('spotify-5E3C45D7B312C643', 'https://download.spotify.com/debian/pubkey_5E3C45D7B312C643.gpg')),
 
         apt.Repository('deb', 'https://download.virtualbox.org/virtualbox/debian', [get_debian_version_name(), 'contrib'],
             key=('virtualbox', 'https://www.virtualbox.org/download/oracle_vbox_2016.asc'), arch='amd64'),
