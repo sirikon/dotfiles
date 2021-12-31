@@ -110,6 +110,7 @@ function link-x {
 function configure-git {
 	log-title "Configuring git"
 	git config --global pull.rebase true
+	git config --global submodule.recurse true
 	git config --global user.name "Carlos Fdez. Llamas"
 	git config --global user.email "hello@sirikon.me"
 }
