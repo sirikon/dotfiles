@@ -106,6 +106,11 @@ function upgrade-appium { (
 	ln -s "$(pwd)/Appium-Server-GUI-linux-${latest_version}.AppImage" ~/bin/appium
 ); }
 
+function backup-anbernic { (
+	cd ~/Dropbox/Backup/Anbernic_Saves/ReGBA
+	scp root@10.1.1.2:/media/data/local/home/.gpsp/* .
+); }
+
 function my-commits-here {
 	smerge search 'author:"Carlos Fdez. Llamas <hello@sirikon.me>"' .
 }
