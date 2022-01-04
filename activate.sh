@@ -106,6 +106,16 @@ function upgrade-appium { (
 	ln -s "$(pwd)/Appium-Server-GUI-linux-${latest_version}.AppImage" ~/bin/appium
 ); }
 
+function upgrade-binmerge { (
+	rm -rf ~/Software/binmerge
+	mkdir -p ~/Software/binmerge
+	git clone "https://github.com/putnam/binmerge.git" ~/Software/binmerge
+	cd ~/Software/binmerge
+	git reset --hard "7218522aac721f6b0dcc2efc1b38f7d286979c7a"
+	rm -rf ~/bin/binmerge
+	ln -s "$(pwd)/binmerge" ~/bin/binmerge
+); }
+
 function backup-anbernic { (
 	cd ~/Dropbox/Backup/Anbernic_Saves/ReGBA
 	scp root@10.1.1.2:/media/data/local/home/.gpsp/* .
