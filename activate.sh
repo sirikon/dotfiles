@@ -116,6 +116,22 @@ function upgrade-binmerge { (
 	ln -s "$(pwd)/binmerge" ~/bin/binmerge
 ); }
 
+function upgrade-firefox { (
+	rm -rf ~/Software/firefox
+	mkdir -p ~/Software/firefox
+	cd ~/Software/firefox
+	curl -Lo firefox.tar.bz2 \
+		"https://download.mozilla.org/?product=firefox-latest-ssl&os=linux64&lang=en-US"
+	tar -xvf firefox.tar.bz2
+	sudo rm -rf /opt/firefox
+	sudo mv ./firefox /opt/firefox
+	sudo chown -R root:root /opt/firefox
+	sudo rm -f /usr/local/bin/firefox
+	sudo ln -s /opt/firefox/firefox /usr/local/bin/firefox
+	sudo update-alternatives --install /usr/bin/x-www-browser x-www-browser /opt/firefox/firefox 200
+	sudo update-alternatives --set x-www-browser /opt/firefox/firefox
+); }
+
 function backup-anbernic { (
 	cd ~/Dropbox/Backup/Anbernic_Saves/ReGBA
 	scp root@10.1.1.2:/media/data/local/home/.gpsp/* .

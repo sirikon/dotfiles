@@ -17,8 +17,8 @@ def main():
         apt.Repository('deb', 'http://deb.debian.org/debian', ['buster', 'main']),
         apt.Repository('deb-src', 'http://deb.debian.org/debian', ['buster', 'main']),
 
-        apt.Repository('deb', 'http://deb.debian.org/debian', ['unstable', 'main']),
-        apt.Repository('deb-src', 'http://deb.debian.org/debian', ['unstable', 'main']),
+        # apt.Repository('deb', 'http://deb.debian.org/debian', ['unstable', 'main']),
+        # apt.Repository('deb-src', 'http://deb.debian.org/debian', ['unstable', 'main']),
 
         # Others
         apt.Repository('deb', 'https://dbeaver.io/debs/dbeaver-ce', ['/'],
@@ -45,11 +45,11 @@ def main():
 
     apt.set_pins(
         apt.Pin(package='*', release='o=Debian,n=buster', priority=1),
-        apt.Pin(package='*', release='o=Debian,a=unstable', priority=1),
-        apt.Pin(package='libnspr4', release='o=Debian,a=unstable', priority=500),
-        apt.Pin(package='libnspr4-dev', release='o=Debian,a=unstable', priority=500),
-        apt.Pin(package='libnss3', release='o=Debian,a=unstable', priority=500),
-        apt.Pin(package='libnss3-dev', release='o=Debian,a=unstable', priority=500),
+        # apt.Pin(package='*', release='o=Debian,a=unstable', priority=1),
+        # apt.Pin(package='libnspr4', release='o=Debian,a=unstable', priority=500),
+        # apt.Pin(package='libnspr4-dev', release='o=Debian,a=unstable', priority=500),
+        # apt.Pin(package='libnss3', release='o=Debian,a=unstable', priority=500),
+        # apt.Pin(package='libnss3-dev', release='o=Debian,a=unstable', priority=500),
         apt.Pin(package='*', release='o=packagecloud.io/slacktechnologies/slack', priority=1),
         apt.Pin(package='*', release='l=insomnia-ubuntu', priority=1)
     )
