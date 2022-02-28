@@ -18,7 +18,7 @@ function main {
 	link-i3
 	link-vscodium
 	link-xfce4-terminal
-	link-sublime-merge
+	link-sublime
 	link-x
 	link-bins
 
@@ -96,9 +96,10 @@ function link-xfce4-terminal {
 	link-force "${ROOT}/config/xfce4-terminal/terminalrc" ~/.config/xfce4/terminal/terminalrc
 }
 
-function link-sublime-merge {
-	log-title "Linking sublime merge config"
+function link-sublime {
+	log-title "Linking sublime text/merge config"
 	link-force "${ROOT}/config/sublime-merge/Preferences.sublime-settings" ~/.config/sublime-merge/Packages/User/Preferences.sublime-settings
+	link-force "${ROOT}/config/sublime-text/Preferences.sublime-settings" ~/.config/sublime-text/Packages/User/Preferences.sublime-settings
 }
 
 function link-x {

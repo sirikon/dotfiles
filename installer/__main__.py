@@ -58,7 +58,7 @@ def main():
         *devices.get_required_apt_packages(),
         "xorg", "i3", "lightdm",
         "network-manager", "network-manager-gnome",
-        "firefox", "chromium", "vim", "arandr",
+        "chromium", "vim", "arandr",
         "pulseaudio", "pavucontrol", "spotify-client",
         "nitrogen", "dunst", "thunar",
         "python3", "python3-pip", "python3-venv", "python3-gpg",
