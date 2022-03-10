@@ -60,7 +60,7 @@ def main():
         "network-manager", "network-manager-gnome",
         "chromium", "vim", "arandr",
         "pulseaudio", "pavucontrol", "spotify-client",
-        "nitrogen", "dunst", "thunar",
+        "nitrogen", "dunst", "thunar", "gnome-calculator",
         "python3", "python3-pip", "python3-venv", "python3-gpg",
         "fwupd", "policykit-1-gnome",
         "fonts-noto-color-emoji", "linux-headers-amd64",
