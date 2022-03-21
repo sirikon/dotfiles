@@ -72,7 +72,7 @@ def main():
         "dbeaver-ce", "sublime-text", "sublime-merge",
         "zenity", "xss-lock", "virtualbox-6.1",
         "zip", "unzip", "cups", "system-config-printer",
-        "gnome-system-monitor"
+        "gnome-system-monitor", "brightnessctl"
     )
 
     devices.configure_xorg_graphics_card()
