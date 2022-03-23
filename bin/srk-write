@@ -42,9 +42,22 @@ providers = {
     "stripe-card": provideStripeCard
 }
 
-if len(sys.argv) > 1:
-    provider = sys.argv[1]
+def runProvider(provider):
     text = providers[provider]()
     run(["bash", "-c", f'printf "%s" "{text}" | xclip -sel clip'])
     run(["notify-send", f"Copied to clipboard: {text}"])
-    # run(["xdotool", "type", "--delay", "100", text])
+
+if len(sys.argv) == 1:
+    result = zenity.list(
+        title="Writer picker",
+        text="Pick what you want to write",
+        columns=["Name"],
+        extra_buttons=[],
+        width=200,
+        height=250,
+        data=providers.keys())
+    runProvider(result)
+
+if len(sys.argv) > 1:
+    provider = sys.argv[1]
+    runProvider(provider)
