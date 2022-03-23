@@ -45,4 +45,6 @@ providers = {
 if len(sys.argv) > 1:
     provider = sys.argv[1]
     text = providers[provider]()
-    run(["xdotool", "type", "--delay", "100", text])
+    run(["bash", "-c", f'printf "%s" "{text}" | xclip -sel clip'])
+    run(["notify-send", f"Copied to clipboard: {text}"])
+    # run(["xdotool", "type", "--delay", "100", text])
