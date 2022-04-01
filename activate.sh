@@ -132,6 +132,18 @@ function upgrade-firefox { (
 	sudo update-alternatives --set x-www-browser /opt/firefox/firefox
 ); }
 
+function upgrade-yq { (
+	rm -rf ~/Software/yq
+	mkdir -p ~/Software/yq
+	cd ~/Software/yq
+	latest_version=$(curl --silent "https://api.github.com/repos/mikefarah/yq/releases/latest" | jq -r ".tag_name")
+	printf "%s\n\n" "Downloading yq ${latest_version}"
+	curl -Lo yq "https://github.com/mikefarah/yq/releases/download/${latest_version}/yq_linux_amd64"
+	chmod +x yq
+	rm -rf ~/bin/yq
+	ln -s "$(pwd)/yq" ~/bin/yq
+); }
+
 function backup-anbernic { (
 	cd ~/Dropbox/Backup/Anbernic_Saves/ReGBA
 	scp root@10.1.1.2:/media/data/local/home/.gpsp/* .
