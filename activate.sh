@@ -144,6 +144,40 @@ function upgrade-yq { (
 	ln -s "$(pwd)/yq" ~/bin/yq
 ); }
 
+function upgrade-htmlq { (
+	rm -rf ~/Software/htmlq
+	mkdir -p ~/Software/htmlq
+	cd ~/Software/htmlq
+	latest_version=$(curl --silent "https://api.github.com/repos/mgdm/htmlq/releases/latest" | jq -r ".tag_name")
+	printf "%s\n\n" "Downloading htmlq ${latest_version}"
+	curl -Lo htmlq.tar.gz "https://github.com/mgdm/htmlq/releases/download/${latest_version}/htmlq-x86_64-linux.tar.gz"
+	tar -xzf htmlq.tar.gz
+	rm -rf ~/bin/htmlq
+	ln -s "$(pwd)/htmlq" ~/bin/htmlq
+); }
+
+function upgrade-fnmt-tools { (
+	rm -rf ~/Software/fnmt
+	mkdir -p ~/Software/fnmt
+	cd ~/Software/fnmt
+
+	configurador_download_url=$(curl -sL "https://www.sede.fnmt.gob.es/descargas/descarga-software/instalacion-software-generacion-de-claves" | htmlq --attribute href 'a[href*="amd64.deb"]')
+	printf "%s\n%s\n\n" "Downloading Configurador:" "${configurador_download_url}"
+	curl -Lo configurador.deb "${configurador_download_url}"
+	printf "%s\n" ""
+
+	autofirma_download_url=$(curl -sL "https://firmaelectronica.gob.es/Home/Descargas.html" | htmlq --attribute href 'a[href$="AutoFirma_Linux.zip"]')
+	printf "%s\n%s\n\n" "Downloading AutoFirma:" "${autofirma_download_url}"
+	curl -Lo autofirma.zip "${autofirma_download_url}"
+	printf "%s\n" ""
+
+	sudo apt install ./configurador.deb
+	printf "%s\n" ""
+
+	unzip autofirma.zip
+	sudo apt install ./AutoFirma*.deb
+); }
+
 function backup-anbernic { (
 	cd ~/Dropbox/Backup/Anbernic_Saves/ReGBA
 	scp root@10.1.1.2:/media/data/local/home/.gpsp/* .
