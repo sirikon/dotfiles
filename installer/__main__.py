@@ -2,6 +2,8 @@ from subprocess import run, PIPE
 from .modules import apt, devices
 
 def main():
+    apt.enable_i386()
+
     apt.ensure_packages(
         'apt-transport-https', 'ca-certificates', 'curl', 'git',
         'gnupg', 'lsb-release', 'debian-archive-keyring'
@@ -38,6 +40,10 @@ def main():
 
         apt.Repository('deb', 'https://download.virtualbox.org/virtualbox/debian', [get_debian_version_name(), 'contrib'],
             key=('virtualbox', 'https://www.virtualbox.org/download/oracle_vbox_2016.asc'), arch='amd64'),
+
+        apt.Repository('deb', 'https://dl.winehq.org/wine-builds/debian', [get_debian_version_name(), 'main'],
+            key=('wine', 'https://dl.winehq.org/wine-builds/winehq.key'),
+            arch='amd64,i386'),
 
         apt.Repository('deb', 'https://download.konghq.com/insomnia-ubuntu/', ['default', 'all'],
             trusted=True, arch='amd64')
