@@ -2,7 +2,7 @@ from subprocess import run, PIPE
 from .modules import apt, devices
 
 def main():
-    apt.enable_i386()
+    # apt.enable_i386()
 
     apt.ensure_packages(
         'apt-transport-https', 'ca-certificates', 'curl', 'git',
@@ -30,7 +30,8 @@ def main():
             key=('sublimehq', 'https://download.sublimetext.com/sublimehq-pub.gpg')),
 
         apt.Repository('deb', 'https://download.docker.com/linux/debian', [get_debian_version_name(), 'stable'],
-            key=('docker', 'https://download.docker.com/linux/debian/gpg')),
+            key=('docker', 'https://download.docker.com/linux/debian/gpg'),
+            arch='amd64'),
 
         apt.Repository('deb', 'https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/debs', ['vscodium', 'main'],
             key=('vscodium', 'https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg')),
@@ -41,9 +42,9 @@ def main():
         apt.Repository('deb', 'https://download.virtualbox.org/virtualbox/debian', [get_debian_version_name(), 'contrib'],
             key=('virtualbox', 'https://www.virtualbox.org/download/oracle_vbox_2016.asc'), arch='amd64'),
 
-        apt.Repository('deb', 'https://dl.winehq.org/wine-builds/debian', [get_debian_version_name(), 'main'],
-            key=('wine', 'https://dl.winehq.org/wine-builds/winehq.key'),
-            arch='amd64,i386'),
+        # apt.Repository('deb', 'https://dl.winehq.org/wine-builds/debian', [get_debian_version_name(), 'main'],
+        #     key=('wine', 'https://dl.winehq.org/wine-builds/winehq.key'),
+        #     arch='amd64,i386'),
 
         apt.Repository('deb', 'https://download.konghq.com/insomnia-ubuntu/', ['default', 'all'],
             trusted=True, arch='amd64')
