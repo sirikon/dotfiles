@@ -15,9 +15,21 @@ function main {
 }
 
 function configure-bash {
-	log-title "Configuring bash"
-	rm ~/.bash_profile
-	ln -s "$(pwd)/activate.mac.sh" ~/.bash_profile
+	log-title "Extending ~.bash_profile"
+	if [ "$(grep -c "# Sirikon dotfiles" ~/.bash_profile)" == 0 ]; then
+		bashprofile-fragment >>~/.bash_profile
+		log "Done."
+	else
+		log "Activation script already exists in ~.bash_profile. Skipping."
+	fi
+}
+
+function bashprofile-fragment {
+	cat <<EOF
+
+# Sirikon dotfiles
+source $(pwd)/activate.mac.sh
+EOF
 }
 
 function configure-git {
