@@ -12,6 +12,7 @@ function main {
 	install-asdf
 	configure-bash
 	configure-git
+	configure-dropbox-links
 }
 
 function configure-bash {
@@ -40,11 +41,28 @@ function configure-git {
 	git config --global user.email "hello@sirikon.me"
 }
 
+function configure-dropbox-links {
+	[ ! -d ~/Dropbox/ProgramData ] && return 0
+	log-title "Configuring Dropbox links"
+
+	link-force ~/Dropbox/ProgramData/DBeaver/General ~/Library/DBeaverData/workspace6/General
+}
+
 function install-asdf {
 	[ -d ~/.asdf ] && return
 
 	log-title "Installing asdf vm"
 	git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.8.1
+}
+
+function link-force {
+	source="$1"
+	target="$2"
+
+	rm -rf "$target"
+	mkdir -p "$(dirname "$target")"
+	ln -s "$source" "$target"
+	log "${target} done."
 }
 
 function log-title {
